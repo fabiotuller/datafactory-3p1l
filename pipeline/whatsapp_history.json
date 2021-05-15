@@ -1,0 +1,33 @@
+{
+	"name": "whatsapp_history",
+	"properties": {
+		"activities": [
+			{
+				"name": "run_get_history",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/fabiotuller@outlook.com/prod/null"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "Chat-API"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-05-14T20:33:06Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

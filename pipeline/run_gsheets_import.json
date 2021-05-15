@@ -1,0 +1,34 @@
+{
+	"name": "run_gsheets_import",
+	"properties": {
+		"activities": [
+			{
+				"name": "run_gsheets",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/fabiotuller@outlook.com/prod/gsheets_import",
+					"baseParameters": {
+						"sheet_id": "1GkHVkhrnbxqnfFyHQuvm7u4Fl-SqNCi6b3dKDPYbPBE",
+						"worksheet_name": "Plan1"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-05-11T14:27:47Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

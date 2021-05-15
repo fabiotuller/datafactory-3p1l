@@ -1,0 +1,24 @@
+{
+	"name": "MySql_Magento2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Magento2_Reader_Prod",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": {
+				"value": "@dataset().tableName",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

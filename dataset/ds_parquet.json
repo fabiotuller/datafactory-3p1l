@@ -1,0 +1,36 @@
+{
+	"name": "ds_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"layerName": {
+				"type": "string"
+			},
+			"sourceName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@{item()}",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@concat(dataset().layerName,'/',dataset().sourceName,'/',item())",
+					"type": "Expression"
+				},
+				"fileSystem": "datalake-raw"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

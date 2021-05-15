@@ -1,0 +1,127 @@
+{
+	"name": "ingestionFull -MenuPay",
+	"properties": {
+		"activities": [
+			{
+				"name": "ListTables",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@split('payments,sales,payment_sale,payment_statuses,customers',',')",
+						"type": "Expression"
+					},
+					"batchCount": 50,
+					"activities": [
+						{
+							"name": "CopyFull",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "MySqlSource",
+									"query": {
+										"value": "SELECT * FROM @{item()}",
+										"type": "Expression"
+									}
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "ParquetWriteSettings"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "MySql_MenuPay",
+									"type": "DatasetReference",
+									"parameters": {
+										"tableName": "@{item()}"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "ds_parquet",
+									"type": "DatasetReference",
+									"parameters": {
+										"layerName": "menu_raw",
+										"sourceName": "payments"
+									}
+								}
+							]
+						},
+						{
+							"name": "exec_notebook-raw_to_kitchen",
+							"type": "DatabricksNotebook",
+							"dependsOn": [
+								{
+									"activity": "CopyFull",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/fabiotuller@outlook.com/prod/raw_to_kitchen/raw_to_kitchen_full",
+								"baseParameters": {
+									"on_id": "vazio",
+									"source": "payments",
+									"table_name": {
+										"value": "@{item()}",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricks",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"source": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "MenuPay/raw_kitchen"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-05-12T15:33:32Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
