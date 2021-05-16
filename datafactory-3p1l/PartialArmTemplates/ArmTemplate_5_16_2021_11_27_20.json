@@ -1,0 +1,313 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Nome do Data Factory",
+			"defaultValue": "datafactory-3p1l"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/orchestrator_main_10min')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dt_last_order",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "MySqlSource",
+								"query": "select max(updated_at) as dt from sales_order"
+							},
+							"dataset": {
+								"referenceName": "MySql_Magento2",
+								"type": "DatasetReference",
+								"parameters": {
+									"tableName": "sales_order"
+								}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "now_minus_30_minutes_greater-order or customer",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "dt_last_order",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@greaterOrEquals(activity('dt_last_order').output.value[0].dt,addminutes(utcnow(),-720))",
+								"type": "Expression"
+							},
+							"ifFalseActivities": [
+								{
+									"name": "False",
+									"type": "Wait",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"waitTimeInSeconds": 1
+									}
+								}
+							],
+							"ifTrueActivities": [
+								{
+									"name": "True",
+									"type": "Wait",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"waitTimeInSeconds": 1
+									}
+								},
+								{
+									"name": "run_ingestion_full",
+									"type": "ExecutePipeline",
+									"dependsOn": [
+										{
+											"activity": "True",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "ingestionFull",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"source": "magento"
+										}
+									}
+								},
+								{
+									"name": "run_serving_customers",
+									"type": "ExecutePipeline",
+									"dependsOn": [
+										{
+											"activity": "run_ingestion_full",
+											"dependencyConditions": [
+												"Completed"
+											]
+										},
+										{
+											"activity": "run_ingestion_inc",
+											"dependencyConditions": [
+												"Completed"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "serving_customer",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true
+									}
+								},
+								{
+									"name": "run_serving_orders",
+									"type": "ExecutePipeline",
+									"dependsOn": [
+										{
+											"activity": "run_ingestion_full",
+											"dependencyConditions": [
+												"Completed"
+											]
+										},
+										{
+											"activity": "run_ingestion_inc",
+											"dependencyConditions": [
+												"Completed"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "serving_orders",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true
+									}
+								},
+								{
+									"name": "run_serving_stores",
+									"type": "ExecutePipeline",
+									"dependsOn": [
+										{
+											"activity": "run_ingestion_full",
+											"dependencyConditions": [
+												"Completed"
+											]
+										},
+										{
+											"activity": "run_ingestion_inc",
+											"dependencyConditions": [
+												"Completed"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "serving_stores",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true
+									}
+								},
+								{
+									"name": "run_serving_sellers",
+									"type": "ExecutePipeline",
+									"dependsOn": [
+										{
+											"activity": "run_ingestion_full",
+											"dependencyConditions": [
+												"Completed"
+											]
+										},
+										{
+											"activity": "run_ingestion_inc",
+											"dependencyConditions": [
+												"Completed"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "serving_sellers",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true
+									}
+								},
+								{
+									"name": "run_serving_products",
+									"type": "ExecutePipeline",
+									"dependsOn": [
+										{
+											"activity": "run_ingestion_inc",
+											"dependencyConditions": [
+												"Completed"
+											]
+										},
+										{
+											"activity": "run_ingestion_full",
+											"dependencyConditions": [
+												"Completed"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "serving_products",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true
+									}
+								},
+								{
+									"name": "run_ingestion_inc",
+									"type": "ExecutePipeline",
+									"dependsOn": [
+										{
+											"activity": "True",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "ingestionIncremental",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true
+									}
+								},
+								{
+									"name": "run_LogSystem",
+									"type": "ExecutePipeline",
+									"dependsOn": [
+										{
+											"activity": "run_serving_orders",
+											"dependencyConditions": [
+												"Completed"
+											]
+										},
+										{
+											"activity": "run_serving_stores",
+											"dependencyConditions": [
+												"Completed"
+											]
+										},
+										{
+											"activity": "run_serving_sellers",
+											"dependencyConditions": [
+												"Completed"
+											]
+										},
+										{
+											"activity": "run_serving_products",
+											"dependencyConditions": [
+												"Completed"
+											]
+										},
+										{
+											"activity": "run_serving_customers",
+											"dependencyConditions": [
+												"Completed"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "LogSystem",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": false
+									}
+								}
+							]
+						}
+					}
+				],
+				"annotations": [],
+				"lastPublishTime": "2021-05-15T16:27:24Z"
+			},
+			"dependsOn": []
+		}
+	]
+}
