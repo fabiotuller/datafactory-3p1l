@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "datafactory-3p1l"
+		},
+		"AzureDataLakeStorage_accountKey": {
+			"value": ""
+		},
+		"AzureDatabricks_accessToken": {
+			"value": ""
+		},
+		"Magento2_Reader_Prod_connectionString": {
+			"value": ""
+		},
+		"MenuPay_Prod_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage_properties_typeProperties_url": {
+			"value": "https://datalake3p1lprod.dfs.core.windows.net"
+		},
+		"trigger-24h_properties_ingestionFull_1_parameters_source": {
+			"value": "magento"
+		},
+		"AzureDataLakeStorage1_properties_privateLinkResourceId": {
+			"value": "/subscriptions/2c12d660-e733-48bc-97bd-d8528fdae002/resourceGroups/Eng-Datalake-3P1L/providers/Microsoft.Storage/storageAccounts/datalake3p1lprod"
+		},
+		"AzureDataLakeStorage1_properties_groupId": {
+			"value": "dfs"
+		}
+	}
+}
