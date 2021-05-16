@@ -43,7 +43,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@greaterOrEquals(activity('dt_last_order').output.value[0].dt,addminutes(utcnow(),-30))",
+						"value": "@greaterOrEquals(activity('dt_last_order').output.value[0].dt,addminutes(utcnow(),-720))",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
