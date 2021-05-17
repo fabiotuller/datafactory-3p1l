@@ -1270,7 +1270,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Users/fabiotuller@outlook.com/prod/null"
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/d-wp messages_history"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureDatabricks",
@@ -1490,7 +1490,7 @@
 					"recurrence": {
 						"frequency": "Minute",
 						"interval": 10,
-						"startTime": "2021-05-04T15:00:00",
+						"startTime": "2021-05-05T15:00:00",
 						"endTime": "2021-05-17T22:01:00",
 						"timeZone": "E. South America Standard Time"
 					}
