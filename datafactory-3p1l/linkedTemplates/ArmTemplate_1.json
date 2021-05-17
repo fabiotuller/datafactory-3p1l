@@ -930,7 +930,7 @@
 						"frequency": "Day",
 						"interval": 1,
 						"startTime": "2021-05-04T22:00:00",
-						"endTime": "2021-05-16T22:01:00",
+						"endTime": "2021-05-17T22:01:00",
 						"timeZone": "E. South America Standard Time",
 						"schedule": {
 							"minutes": [
@@ -969,7 +969,7 @@
 						"frequency": "Minute",
 						"interval": 10,
 						"startTime": "2021-05-04T15:00:00",
-						"endTime": "2021-05-16T22:01:00",
+						"endTime": "2021-05-17T22:01:00",
 						"timeZone": "E. South America Standard Time"
 					}
 				}
@@ -1000,7 +1000,7 @@
 						"frequency": "Hour",
 						"interval": 1,
 						"startTime": "2021-05-10T13:00:00",
-						"endTime": "2021-05-16T22:01:00",
+						"endTime": "2021-05-17T22:01:00",
 						"timeZone": "E. South America Standard Time"
 					}
 				}
