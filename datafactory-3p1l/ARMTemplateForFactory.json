@@ -1399,12 +1399,12 @@
 					}
 				},
 				"connectVia": {
-					"referenceName": "integrationRuntime1",
+					"referenceName": "AutoResolveIntegrationRuntime",
 					"type": "IntegrationRuntimeReference"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]"
+				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
 			]
 		},
 		{
@@ -1423,12 +1423,12 @@
 					"existingClusterId": "0505-153325-loath60"
 				},
 				"connectVia": {
-					"referenceName": "integrationRuntime1",
+					"referenceName": "AutoResolveIntegrationRuntime",
 					"type": "IntegrationRuntimeReference"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]"
+				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
 			]
 		},
 		{
@@ -1491,7 +1491,7 @@
 						"frequency": "Minute",
 						"interval": 10,
 						"startTime": "2021-05-05T15:00:00",
-						"endTime": "2021-05-18T22:01:00",
+						"endTime": "2021-05-19T22:01:00",
 						"timeZone": "E. South America Standard Time"
 					}
 				}
@@ -1522,7 +1522,7 @@
 						"frequency": "Hour",
 						"interval": 1,
 						"startTime": "2021-05-10T13:00:00",
-						"endTime": "2021-05-18T22:01:00",
+						"endTime": "2021-05-19T22:01:00",
 						"timeZone": "E. South America Standard Time"
 					}
 				}
@@ -1555,7 +1555,7 @@
 						"frequency": "Day",
 						"interval": 1,
 						"startTime": "2021-05-04T22:00:00",
-						"endTime": "2021-05-18T22:01:00",
+						"endTime": "2021-05-19T22:01:00",
 						"timeZone": "E. South America Standard Time",
 						"schedule": {
 							"minutes": [
