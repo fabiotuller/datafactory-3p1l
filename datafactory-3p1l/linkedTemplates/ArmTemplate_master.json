@@ -66,26 +66,26 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"Magento2_Reader_Prod_connectionString": {
-						"value": "[parameters('Magento2_Reader_Prod_connectionString')]"
-					},
-					"MenuPay_Prod_connectionString": {
-						"value": "[parameters('MenuPay_Prod_connectionString')]"
-					},
 					"AzureDataLakeStorage_accountKey": {
 						"value": "[parameters('AzureDataLakeStorage_accountKey')]"
 					},
 					"AzureDatabricks_accessToken": {
 						"value": "[parameters('AzureDatabricks_accessToken')]"
 					},
+					"Magento2_Reader_Prod_connectionString": {
+						"value": "[parameters('Magento2_Reader_Prod_connectionString')]"
+					},
+					"MenuPay_Prod_connectionString": {
+						"value": "[parameters('MenuPay_Prod_connectionString')]"
+					},
+					"AzureDataLakeStorage_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage_properties_typeProperties_url')]"
+					},
 					"AzureDataLakeStorage1_properties_privateLinkResourceId": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_privateLinkResourceId')]"
 					},
 					"AzureDataLakeStorage1_properties_groupId": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_groupId')]"
-					},
-					"AzureDataLakeStorage_properties_typeProperties_url": {
-						"value": "[parameters('AzureDataLakeStorage_properties_typeProperties_url')]"
 					}
 				}
 			},
