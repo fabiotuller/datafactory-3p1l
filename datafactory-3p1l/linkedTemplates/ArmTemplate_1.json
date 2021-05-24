@@ -158,7 +158,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@split('catalog_product_entity_datetime,catalog_product_entity_decimal,catalog_product_entity_int,catalog_product_entity_text,catalog_product_entity_varchar,cataloginventory_stock_item,customer_entity_datetime,customer_entity_decimal,customer_entity_int,customer_entity_text,customer_entity_varchar,mageplaza_webhook_history,quote_item,quote_payment,sales_creditmemo_comment,sales_creditmemo_item,sales_invoice_comment,sales_invoice_item,sales_order_address,sales_order_item,sales_order_payment,sales_order_status_history,sales_shipment_comment,sales_shipment_item,sales_invoice,sales_invoice_grid,sales_shipment,sales_shipment_grid,sales_creditmemo,sales_creditmemo_grid,sales_order,quote,customer_entity,customer_address_entity,catalog_product_entity',',')",
+								"value": "@split('catalog_product_entity_datetime,catalog_product_entity_decimal,catalog_product_entity_int,catalog_product_entity_text,catalog_product_entity_varchar,cataloginventory_stock_item,customer_entity_datetime,customer_entity_decimal,customer_entity_int,customer_entity_text,customer_entity_varchar,mageplaza_webhook_history,quote_item,quote_payment,sales_creditmemo_comment,sales_creditmemo_item,sales_invoice_comment,sales_invoice_item,sales_order_address,sales_order_item,sales_order_payment,sales_order_status_history,sales_shipment_comment,sales_shipment_item',',')",
 								"type": "Expression"
 							},
 							"batchCount": 50,
@@ -770,7 +770,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"pipeline": {
-											"referenceName": "whatsapp_history",
+											"referenceName": "ingestionIncremental",
 											"type": "PipelineReference"
 										},
 										"waitOnCompletion": true,
@@ -830,7 +830,8 @@
 				"lastPublishTime": "2021-05-15T16:27:24Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/ingestionFull')]"
+				"[concat(variables('factoryId'), '/pipelines/ingestionFull')]",
+				"[concat(variables('factoryId'), '/pipelines/ingestionIncremental')]"
 			]
 		},
 		{
