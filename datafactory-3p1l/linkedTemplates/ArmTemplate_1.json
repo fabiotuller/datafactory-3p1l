@@ -770,7 +770,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"pipeline": {
-											"referenceName": "ingestionIncremental",
+											"referenceName": "whatsapp_history",
 											"type": "PipelineReference"
 										},
 										"waitOnCompletion": true,
@@ -830,8 +830,7 @@
 				"lastPublishTime": "2021-05-15T16:27:24Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/ingestionFull')]",
-				"[concat(variables('factoryId'), '/pipelines/ingestionIncremental')]"
+				"[concat(variables('factoryId'), '/pipelines/ingestionFull')]"
 			]
 		},
 		{
