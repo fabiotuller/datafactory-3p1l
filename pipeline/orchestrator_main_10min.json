@@ -234,7 +234,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"pipeline": {
-									"referenceName": "ingestionIncremental",
+									"referenceName": "whatsapp_history",
 									"type": "PipelineReference"
 								},
 								"waitOnCompletion": true
