@@ -286,6 +286,22 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Run_ingestion_MenuPayments",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "ingestionFull -MenuPay",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"source": "payments"
+					}
+				}
 			}
 		],
 		"annotations": [],
