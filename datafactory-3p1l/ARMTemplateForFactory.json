@@ -1661,7 +1661,7 @@
 				"type": "BlobEventsTrigger",
 				"typeProperties": {
 					"blobPathBeginsWith": "/trigger-adf/blobs/",
-					"ignoreEmptyBlobs": false,
+					"ignoreEmptyBlobs": true,
 					"scope": "[parameters('auto-trigger-10min_properties_typeProperties_scope')]",
 					"events": [
 						"Microsoft.Storage.BlobCreated"
