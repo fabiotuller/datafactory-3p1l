@@ -1,5 +1,5 @@
 {
-	"name": "trigger1",
+	"name": "auto-trigger-10min",
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Started",
