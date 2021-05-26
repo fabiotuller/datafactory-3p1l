@@ -832,29 +832,12 @@
 								}
 							]
 						}
-					},
-					{
-						"name": "Run_ingestion_MenuPayments",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "ingestionFull -MenuPay",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"source": "payments"
-							}
-						}
 					}
 				],
 				"annotations": [],
 				"lastPublishTime": "2021-05-15T16:27:24Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/ingestionFull -MenuPay')]",
 				"[concat(variables('factoryId'), '/pipelines/ingestionFull')]",
 				"[concat(variables('factoryId'), '/pipelines/ingestionIncremental')]"
 			]

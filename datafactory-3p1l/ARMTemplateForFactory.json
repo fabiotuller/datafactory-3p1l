@@ -944,22 +944,6 @@
 								}
 							]
 						}
-					},
-					{
-						"name": "Run_ingestion_MenuPayments",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "ingestionFull -MenuPay",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"source": "payments"
-							}
-						}
 					}
 				],
 				"annotations": [],
@@ -967,7 +951,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/MySql_Magento2')]",
-				"[concat(variables('factoryId'), '/pipelines/ingestionFull -MenuPay')]",
 				"[concat(variables('factoryId'), '/pipelines/ingestionFull')]",
 				"[concat(variables('factoryId'), '/pipelines/serving_customer')]",
 				"[concat(variables('factoryId'), '/pipelines/serving_orders')]",
