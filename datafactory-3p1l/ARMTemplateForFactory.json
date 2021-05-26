@@ -27,6 +27,14 @@
 			"type": "string",
 			"defaultValue": "https://datalake3p1lprod.dfs.core.windows.net"
 		},
+		"auto-trigger-10min_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/2c12d660-e733-48bc-97bd-d8528fdae002/resourceGroups/Eng-Datalake-3P1L/providers/Microsoft.Storage/storageAccounts/datalake3p1lprod"
+		},
+		"auto-trigger-1h_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/2c12d660-e733-48bc-97bd-d8528fdae002/resourceGroups/Eng-Datalake-3P1L/providers/Microsoft.Storage/storageAccounts/datalake3p1lprod"
+		},
 		"trigger-24h_properties_ingestionFull_1_parameters_source": {
 			"type": "string",
 			"defaultValue": "magento"
@@ -38,14 +46,6 @@
 		"AzureDataLakeStorage1_properties_groupId": {
 			"type": "string",
 			"defaultValue": "dfs"
-		},
-		"auto-trigger-10min_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/2c12d660-e733-48bc-97bd-d8528fdae002/resourceGroups/Eng-Datalake-3P1L/providers/Microsoft.Storage/storageAccounts/datalake3p1lprod"
-		},
-		"auto-trigger-1h_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/2c12d660-e733-48bc-97bd-d8528fdae002/resourceGroups/Eng-Datalake-3P1L/providers/Microsoft.Storage/storageAccounts/datalake3p1lprod"
 		}
 	},
 	"variables": {
@@ -944,6 +944,22 @@
 								}
 							]
 						}
+					},
+					{
+						"name": "Run_ingestion_MenuPayments",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "ingestionFull -MenuPay",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"source": "payments"
+							}
+						}
 					}
 				],
 				"annotations": [],
@@ -951,6 +967,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/MySql_Magento2')]",
+				"[concat(variables('factoryId'), '/pipelines/ingestionFull -MenuPay')]",
 				"[concat(variables('factoryId'), '/pipelines/ingestionFull')]",
 				"[concat(variables('factoryId'), '/pipelines/serving_customer')]",
 				"[concat(variables('factoryId'), '/pipelines/serving_orders')]",
@@ -1478,6 +1495,68 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/auto-trigger-10min')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "orchestrator_main_10min",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/trigger-adf/blobs/",
+					"blobPathEndsWith": "10min",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('auto-trigger-10min_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/orchestrator_main_10min')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/auto-trigger-1h')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "orchestrator_main_1h",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/trigger-adf/blobs/",
+					"blobPathEndsWith": "1h",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('auto-trigger-1h_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/orchestrator_main_1h')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/trigger-10min')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -1643,68 +1722,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/auto-trigger-10min')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "orchestrator_main_10min",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/trigger-adf/blobs/",
-					"blobPathEndsWith": "10min",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('auto-trigger-10min_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/orchestrator_main_10min')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/auto-trigger-1h')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "orchestrator_main_1h",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/trigger-adf/blobs/",
-					"blobPathEndsWith": "1h",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('auto-trigger-1h_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/orchestrator_main_1h')]"
 			]
 		}
 	]
