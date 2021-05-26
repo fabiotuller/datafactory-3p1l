@@ -10,6 +10,10 @@
 		"trigger-24h_properties_ingestionFull_1_parameters_source": {
 			"type": "string",
 			"defaultValue": "magento"
+		},
+		"auto-trigger-10min_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/2c12d660-e733-48bc-97bd-d8528fdae002/resourceGroups/Eng-Datalake-3P1L/providers/Microsoft.Storage/storageAccounts/datalake3p1lprod"
 		}
 	},
 	"variables": {
@@ -953,7 +957,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
+				"runtimeState": "Stopped",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -1007,6 +1011,36 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/orchestrator_main_1h')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/auto-trigger-10min')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "orchestrator_main_10min",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/trigger-adf/blobs/",
+					"ignoreEmptyBlobs": false,
+					"scope": "[parameters('auto-trigger-10min_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/orchestrator_main_10min')]"
 			]
 		}
 	]
