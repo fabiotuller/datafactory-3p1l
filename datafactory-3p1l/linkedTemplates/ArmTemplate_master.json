@@ -43,6 +43,10 @@
 			"type": "string",
 			"defaultValue": "/subscriptions/2c12d660-e733-48bc-97bd-d8528fdae002/resourceGroups/Eng-Datalake-3P1L/providers/Microsoft.Storage/storageAccounts/datalake3p1lprod"
 		},
+		"auto-trigger-1h_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/2c12d660-e733-48bc-97bd-d8528fdae002/resourceGroups/Eng-Datalake-3P1L/providers/Microsoft.Storage/storageAccounts/datalake3p1lprod"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI para a conta de armazenamento contendo os modelos do ARM vinculados"
@@ -114,6 +118,9 @@
 					},
 					"auto-trigger-10min_properties_typeProperties_scope": {
 						"value": "[parameters('auto-trigger-10min_properties_typeProperties_scope')]"
+					},
+					"auto-trigger-1h_properties_typeProperties_scope": {
+						"value": "[parameters('auto-trigger-1h_properties_typeProperties_scope')]"
 					}
 				}
 			},

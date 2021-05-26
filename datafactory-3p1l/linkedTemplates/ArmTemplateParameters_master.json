@@ -32,6 +32,9 @@
 		"auto-trigger-10min_properties_typeProperties_scope": {
 			"value": "/subscriptions/2c12d660-e733-48bc-97bd-d8528fdae002/resourceGroups/Eng-Datalake-3P1L/providers/Microsoft.Storage/storageAccounts/datalake3p1lprod"
 		},
+		"auto-trigger-1h_properties_typeProperties_scope": {
+			"value": "/subscriptions/2c12d660-e733-48bc-97bd-d8528fdae002/resourceGroups/Eng-Datalake-3P1L/providers/Microsoft.Storage/storageAccounts/datalake3p1lprod"
+		},
 		"containerUri": {
 			"value": ""
 		},
