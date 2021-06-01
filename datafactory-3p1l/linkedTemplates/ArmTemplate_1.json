@@ -25,6 +25,44 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_parquet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"layerName": {
+						"type": "string"
+					},
+					"sourceName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@{item()}",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@concat(dataset().layerName,'/',dataset().sourceName,'/',item())",
+							"type": "Expression"
+						},
+						"fileSystem": "datalake-raw"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ingestionFull -MenuPay')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -151,7 +189,9 @@
 				"annotations": [],
 				"lastPublishTime": "2021-05-12T15:33:32Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_parquet')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ingestionFull')]",
@@ -280,7 +320,9 @@
 				"annotations": [],
 				"lastPublishTime": "2021-05-14T17:27:32Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_parquet')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ingestionFull_1')]",
@@ -409,7 +451,9 @@
 				"annotations": [],
 				"lastPublishTime": "2021-05-12T15:41:33Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_parquet')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ingestionIncremental')]",
@@ -533,7 +577,9 @@
 				"annotations": [],
 				"lastPublishTime": "2021-05-12T15:16:56Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_parquet')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/orchestrator_main_10min')]",
@@ -1053,11 +1099,18 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
 							"referenceName": "orchestrator_main_1h",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "i_orchestrator_main_1h",
 							"type": "PipelineReference"
 						},
 						"parameters": {}
@@ -1069,7 +1122,6 @@
 						"frequency": "Hour",
 						"interval": 1,
 						"startTime": "2021-05-10T13:00:00",
-						"endTime": "2021-05-25T22:01:00",
 						"timeZone": "E. South America Standard Time"
 					}
 				}
