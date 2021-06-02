@@ -582,6 +582,34 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/trigger_integration_1h')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "i_orchestrator_main_1h",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 1,
+						"startTime": "2021-06-02T00:30:00Z",
+						"timeZone": "UTC"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/orchestrator_main_10min')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1104,13 +1132,6 @@
 					{
 						"pipelineReference": {
 							"referenceName": "orchestrator_main_1h",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "i_orchestrator_main_1h",
 							"type": "PipelineReference"
 						},
 						"parameters": {}
