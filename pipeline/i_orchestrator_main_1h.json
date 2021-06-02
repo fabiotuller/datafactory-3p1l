@@ -199,6 +199,39 @@
 					"referenceName": "AzureDatabricks",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "ambev_sending_estoque_ghub",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "ambev_produto_estoque",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "ambev_cdd",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_estoque_sending_ghub"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"folder": {
