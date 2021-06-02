@@ -25,6 +25,32 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/MySql_MenuPay')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "MenuPay_Prod",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"tableName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "MySqlTable",
+				"schema": [],
+				"typeProperties": {
+					"tableName": {
+						"value": "@dataset().tableName",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_parquet')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -190,6 +216,7 @@
 				"lastPublishTime": "2021-05-12T15:33:32Z"
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MySql_MenuPay')]",
 				"[concat(variables('factoryId'), '/datasets/ds_parquet')]"
 			]
 		},
@@ -587,7 +614,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
+				"runtimeState": "Stopped",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -1119,36 +1146,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/orchestrator_main_10min')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/trigger-1h')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "orchestrator_main_1h",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Hour",
-						"interval": 1,
-						"startTime": "2021-05-10T13:00:00",
-						"timeZone": "E. South America Standard Time"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/orchestrator_main_1h')]"
 			]
 		}
 	]
