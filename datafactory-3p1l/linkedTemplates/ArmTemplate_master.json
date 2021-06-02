@@ -35,10 +35,6 @@
 			"type": "string",
 			"defaultValue": "/subscriptions/2c12d660-e733-48bc-97bd-d8528fdae002/resourceGroups/Eng-Datalake-3P1L/providers/Microsoft.Storage/storageAccounts/datalake3p1lprod"
 		},
-		"trigger-24h_properties_ingestionFull_1_parameters_source": {
-			"type": "string",
-			"defaultValue": "magento"
-		},
 		"AzureDataLakeStorage1_properties_privateLinkResourceId": {
 			"type": "string",
 			"defaultValue": "/subscriptions/2c12d660-e733-48bc-97bd-d8528fdae002/resourceGroups/Eng-Datalake-3P1L/providers/Microsoft.Storage/storageAccounts/datalake3p1lprod"
@@ -112,9 +108,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"trigger-24h_properties_ingestionFull_1_parameters_source": {
-						"value": "[parameters('trigger-24h_properties_ingestionFull_1_parameters_source')]"
 					},
 					"auto-trigger-10min_properties_typeProperties_scope": {
 						"value": "[parameters('auto-trigger-10min_properties_typeProperties_scope')]"

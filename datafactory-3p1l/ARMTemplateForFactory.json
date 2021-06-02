@@ -35,10 +35,6 @@
 			"type": "string",
 			"defaultValue": "/subscriptions/2c12d660-e733-48bc-97bd-d8528fdae002/resourceGroups/Eng-Datalake-3P1L/providers/Microsoft.Storage/storageAccounts/datalake3p1lprod"
 		},
-		"trigger-24h_properties_ingestionFull_1_parameters_source": {
-			"type": "string",
-			"defaultValue": "magento"
-		},
 		"AzureDataLakeStorage1_properties_privateLinkResourceId": {
 			"type": "string",
 			"defaultValue": "/subscriptions/2c12d660-e733-48bc-97bd-d8528fdae002/resourceGroups/Eng-Datalake-3P1L/providers/Microsoft.Storage/storageAccounts/datalake3p1lprod"
@@ -245,33 +241,6 @@
 						"userProperties": [],
 						"typeProperties": {
 							"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_pricing_sending_ghub"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureDatabricks",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "ambev_sending_product_ghub",
-						"type": "DatabricksNotebook",
-						"dependsOn": [
-							{
-								"activity": "ambev_produto",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"notebookPath": "/Users/fabiotuller@outlook.com/prod/null"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureDatabricks",
@@ -1802,12 +1771,10 @@
 				"pipelines": [
 					{
 						"pipelineReference": {
-							"referenceName": "ingestionFull_1",
+							"referenceName": "orchestrator_main_24h",
 							"type": "PipelineReference"
 						},
-						"parameters": {
-							"source": "[parameters('trigger-24h_properties_ingestionFull_1_parameters_source')]"
-						}
+						"parameters": {}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -1829,7 +1796,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/ingestionFull_1')]"
+				"[concat(variables('factoryId'), '/pipelines/orchestrator_main_24h')]"
 			]
 		},
 		{
@@ -1926,6 +1893,56 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/orchestrator_main_24h')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ambev_sending_product_ghub",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_product_sending_ghub"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "run_magento2_ingestionFull24h",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "ingestionFull_1",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"source": "magento"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks')]",
+				"[concat(variables('factoryId'), '/pipelines/ingestionFull_1')]"
 			]
 		}
 	]
