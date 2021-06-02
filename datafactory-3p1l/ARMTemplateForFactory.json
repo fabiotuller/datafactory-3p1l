@@ -105,7 +105,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Users/fabiotuller@outlook.com/sandbox/ambev/integration produto"
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/integration produto"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureDatabricks",
@@ -125,7 +125,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Users/fabiotuller@outlook.com/sandbox/ambev/integration produto_pdv"
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/integration produto_pdv"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureDatabricks",
@@ -145,7 +145,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Users/fabiotuller@outlook.com/sandbox/ambev/integration produto_estoque"
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/integration produto_estoque"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureDatabricks",
@@ -165,7 +165,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Users/fabiotuller@outlook.com/sandbox/ambev/integration pdv"
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/integration pdv"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureDatabricks",
@@ -185,7 +185,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Users/fabiotuller@outlook.com/sandbox/ambev/integration condicao_pagto"
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/integration condicao_pagto"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureDatabricks",
@@ -205,7 +205,46 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Users/fabiotuller@outlook.com/sandbox/ambev/integration cdd"
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/integration cdd"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "ambev_sending_price_ghub",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "ambev_produto_pdv",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "ambev_pdv",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "ambev_cdd",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_pricing_sending_ghub"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureDatabricks",
