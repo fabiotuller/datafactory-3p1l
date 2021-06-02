@@ -6,15 +6,6 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "ingestionFull_1",
-					"type": "PipelineReference"
-				},
-				"parameters": {
-					"source": "magento"
-				}
-			},
-			{
-				"pipelineReference": {
 					"referenceName": "orchestrator_main_24h",
 					"type": "PipelineReference"
 				}
