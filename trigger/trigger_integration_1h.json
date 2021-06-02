@@ -1,0 +1,24 @@
+{
+	"name": "trigger_integration_1h",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "i_orchestrator_main_1h",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 1,
+				"startTime": "2021-06-02T00:00:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
