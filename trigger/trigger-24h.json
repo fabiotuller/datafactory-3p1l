@@ -12,6 +12,12 @@
 				"parameters": {
 					"source": "magento"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "orchestrator_main_24h",
+					"type": "PipelineReference"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
