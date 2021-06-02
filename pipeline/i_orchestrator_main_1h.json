@@ -181,7 +181,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_product_sending_ghub"
+					"notebookPath": "/Users/fabiotuller@outlook.com/prod/null"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureDatabricks",
