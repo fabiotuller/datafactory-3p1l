@@ -21,6 +21,22 @@
 					"referenceName": "AzureDatabricks",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "run_magento2_ingestionFull24h",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "ingestionFull_1",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"source": "magento"
+					}
+				}
 			}
 		],
 		"annotations": []
