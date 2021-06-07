@@ -123,64 +123,25 @@
 				}
 			},
 			{
-				"name": "ambev_sending_price_ghub",
-				"type": "DatabricksNotebook",
-				"dependsOn": [
-					{
-						"activity": "ambev_produto_pdv",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "ambev_pdv",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "ambev_cdd",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_pricing_sending_ghub"
-				},
-				"linkedServiceName": {
-					"referenceName": "AzureDatabricks",
-					"type": "LinkedServiceReference"
-				}
-			},
-			{
 				"name": "ambev_sending_pdv_ghub",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "ambev_pdv",
+						"activity": "ambev_condicao_pagto",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					},
 					{
 						"activity": "ambev_cdd",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					},
 					{
-						"activity": "ambev_condicao_pagto",
+						"activity": "ambev_pdv",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
@@ -205,15 +166,15 @@
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "ambev_produto_estoque",
+						"activity": "ambev_cdd",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					},
 					{
-						"activity": "ambev_cdd",
+						"activity": "ambev_produto_estoque",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
@@ -231,6 +192,65 @@
 				"linkedServiceName": {
 					"referenceName": "AzureDatabricks",
 					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "List unb",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "ambev_pdv",
+						"dependencyConditions": [
+							"Completed"
+						]
+					},
+					{
+						"activity": "ambev_produto_pdv",
+						"dependencyConditions": [
+							"Completed"
+						]
+					},
+					{
+						"activity": "ambev_cdd",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@split('36',',')",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "ambev_sending_price_ghub",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_pricing_sending_ghub",
+								"baseParameters": {
+									"unb": {
+										"value": "@{item()}",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricks",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
 				}
 			}
 		],
