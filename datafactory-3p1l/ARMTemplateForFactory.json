@@ -312,7 +312,7 @@
 							"batchCount": 50,
 							"activities": [
 								{
-									"name": "ambev_sending_price_ghub",
+									"name": "ambev_sending_price_ghub 1",
 									"type": "DatabricksNotebook",
 									"dependsOn": [],
 									"policy": {
@@ -372,7 +372,7 @@
 							"batchCount": 50,
 							"activities": [
 								{
-									"name": "ambev_sending_price_ghub_copy1",
+									"name": "ambev_sending_price_ghub 2",
 									"type": "DatabricksNotebook",
 									"dependsOn": [],
 									"policy": {
@@ -432,7 +432,7 @@
 							"batchCount": 50,
 							"activities": [
 								{
-									"name": "ambev_sending_price_ghub_copy1_copy1",
+									"name": "ambev_sending_price_ghub 3",
 									"type": "DatabricksNotebook",
 									"dependsOn": [],
 									"policy": {
