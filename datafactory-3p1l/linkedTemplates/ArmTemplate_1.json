@@ -21,6 +21,32 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/MySql_Magento2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Magento2_Reader_Prod",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"tableName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "MySqlTable",
+				"schema": [],
+				"typeProperties": {
+					"tableName": {
+						"value": "@dataset().tableName",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/MySql_MenuPay')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -344,6 +370,7 @@
 				"lastPublishTime": "2021-05-14T17:27:32Z"
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MySql_Magento2')]",
 				"[concat(variables('factoryId'), '/datasets/ds_parquet')]"
 			]
 		},
@@ -475,6 +502,7 @@
 				"lastPublishTime": "2021-05-12T15:41:33Z"
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MySql_Magento2')]",
 				"[concat(variables('factoryId'), '/datasets/ds_parquet')]"
 			]
 		},
@@ -601,6 +629,7 @@
 				"lastPublishTime": "2021-05-12T15:16:56Z"
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MySql_Magento2')]",
 				"[concat(variables('factoryId'), '/datasets/ds_parquet')]"
 			]
 		},
@@ -935,6 +964,7 @@
 				"lastPublishTime": "2021-05-15T16:27:24Z"
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MySql_Magento2')]",
 				"[concat(variables('factoryId'), '/pipelines/ingestionFull')]",
 				"[concat(variables('factoryId'), '/pipelines/ingestionIncremental')]"
 			]
@@ -990,13 +1020,13 @@
 						}
 					},
 					{
-						"name": "run_customer_cluster",
+						"name": "run_customer_cluster_NONE",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "magento_customer_cluster",
+								"referenceName": "none",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
