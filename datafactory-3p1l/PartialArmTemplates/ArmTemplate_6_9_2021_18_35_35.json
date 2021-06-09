@@ -1,0 +1,269 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Nome do Data Factory",
+			"defaultValue": "datafactory-3p1l"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/ingestionFull')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ListTables",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@split('catalog_product_entity_datetime,catalog_product_entity_decimal,catalog_product_entity_int,catalog_product_entity_text,catalog_product_entity_varchar,cataloginventory_stock_item,customer_entity_datetime,customer_entity_decimal,customer_entity_int,customer_entity_text,customer_entity_varchar,mageplaza_webhook_history,quote_item,quote_payment,sales_creditmemo_comment,sales_creditmemo_item,sales_invoice_comment,sales_invoice_item,sales_order_address,sales_order_item,sales_order_payment,sales_order_status_history,sales_shipment_comment,sales_shipment_item',',')",
+								"type": "Expression"
+							},
+							"batchCount": 50,
+							"activities": [
+								{
+									"name": "CopyFull",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "MySqlSource",
+											"query": {
+												"value": "SELECT * FROM @{item()}",
+												"type": "Expression"
+											}
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "MySql_Magento2",
+											"type": "DatasetReference",
+											"parameters": {
+												"tableName": "@{item()}"
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "ds_parquet",
+											"type": "DatasetReference",
+											"parameters": {
+												"layerName": "menu_raw",
+												"sourceName": "magento"
+											}
+										}
+									]
+								},
+								{
+									"name": "exec_notebook-raw_to_kitchen",
+									"type": "DatabricksNotebook",
+									"dependsOn": [
+										{
+											"activity": "CopyFull",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"notebookPath": "/Users/fabiotuller@outlook.com/prod/raw_to_kitchen/raw_to_kitchen_full",
+										"baseParameters": {
+											"on_id": "vazio",
+											"source": "magento",
+											"table_name": {
+												"value": "@{item()}",
+												"type": "Expression"
+											}
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "AzureDatabricks",
+										"type": "LinkedServiceReference"
+									}
+								}
+							]
+						}
+					}
+				],
+				"parameters": {
+					"source": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Magento2/raw_kitchen"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-05-14T17:27:32Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ingestionIncremental')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ListTables",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@split('sales_invoice,sales_invoice_grid,sales_shipment,sales_shipment_grid,sales_creditmemo,sales_creditmemo_grid,sales_order,quote,customer_address_entity,catalog_product_entity,customer_entity',',')",
+								"type": "Expression"
+							},
+							"batchCount": 50,
+							"activities": [
+								{
+									"name": "CopyInc",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "MySqlSource",
+											"query": {
+												"value": "SELECT * FROM @{item()} where updated_at between date_add(current_date(),interval -2 day) and date_add(current_date(),interval 1 day)",
+												"type": "Expression"
+											}
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "MySql_Magento2",
+											"type": "DatasetReference",
+											"parameters": {
+												"tableName": "@{item()}"
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "ds_parquet",
+											"type": "DatasetReference",
+											"parameters": {
+												"layerName": "menu_raw",
+												"sourceName": "magento"
+											}
+										}
+									]
+								},
+								{
+									"name": "exec_notebook-raw_to_kitchen",
+									"type": "DatabricksNotebook",
+									"dependsOn": [
+										{
+											"activity": "CopyInc",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"notebookPath": "/Users/fabiotuller@outlook.com/prod/raw_to_kitchen/raw_to_kitchen_inc",
+										"baseParameters": {
+											"on_id": "vazio",
+											"source": "magento",
+											"table_name": {
+												"value": "@{item()}",
+												"type": "Expression"
+											}
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "AzureDatabricks",
+										"type": "LinkedServiceReference"
+									}
+								}
+							]
+						}
+					}
+				],
+				"folder": {
+					"name": "Magento2/raw_kitchen"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-05-12T15:16:56Z"
+			},
+			"dependsOn": []
+		}
+	]
+}
