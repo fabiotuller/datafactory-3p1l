@@ -882,7 +882,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@split('sales_invoice,sales_invoice_grid,sales_shipment,sales_shipment_grid,sales_creditmemo,sales_creditmemo_grid,sales_order,quote,customer_entity,customer_address_entity,catalog_product_entity',',')",
+								"value": "@split('sales_invoice,sales_invoice_grid,sales_shipment,sales_shipment_grid,sales_creditmemo,sales_creditmemo_grid,sales_order,quote,customer_address_entity,catalog_product_entity',',')",
 								"type": "Expression"
 							},
 							"batchCount": 50,
