@@ -45,13 +45,13 @@
 				}
 			},
 			{
-				"name": "run_customer_cluster",
+				"name": "run_customer_cluster_NONE",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "magento_customer_cluster",
+						"referenceName": "none",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
