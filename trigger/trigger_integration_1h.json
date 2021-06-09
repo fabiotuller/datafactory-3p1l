@@ -2,7 +2,7 @@
 	"name": "trigger_integration_1h",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
@@ -15,7 +15,7 @@
 		"typeProperties": {
 			"recurrence": {
 				"frequency": "Hour",
-				"interval": 1,
+				"interval": 2,
 				"startTime": "2021-06-02T00:30:00Z",
 				"timeZone": "UTC"
 			}
