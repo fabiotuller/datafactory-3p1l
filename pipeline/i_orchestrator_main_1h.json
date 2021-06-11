@@ -349,7 +349,7 @@
 				}
 			},
 			{
-				"name": "List unb 3",
+				"name": "List unb Geo_CO",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -374,12 +374,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@split('992,986,977,975,973,970,968,966,964,958,956,944,942,940,934,928,926,906,902,849,845,843,835,829,825,820,811,809,783,771,764,763,762,761,732,729,725,724,723,713,710,619,603,598,581,578',',')",
+						"value": "@split('77,572,942,849,435,448,191,783,829,465,111,39,354,453,454,455,710,732,761',',')",
 						"type": "Expression"
 					},
 					"activities": [
 						{
-							"name": "ambev_sending_price_ghub 3",
+							"name": "ambev_sending_price_ghub Geo_CO",
 							"type": "DatabricksNotebook",
 							"dependsOn": [
 								{
@@ -412,7 +412,7 @@
 							}
 						},
 						{
-							"name": "ambev_sending_pdv_ghub 3",
+							"name": "ambev_sending_pdv_ghub Geo_CO",
 							"type": "DatabricksNotebook",
 							"dependsOn": [
 								{
