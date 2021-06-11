@@ -184,6 +184,7 @@
 						"value": "@split('45,186,189,322,820,835,845,986,88,95,374,438,541,576,906,723,326',',')",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "ambev_sending_price_ghub Geo_MG",
@@ -269,6 +270,7 @@
 						"value": "@split('137,297,301,303,578,966,968,970,771,764,204,372,379,216,230,214,231,242,401,469',',')",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "ambev_sending_price_ghub Geo_SP",
@@ -342,7 +344,7 @@
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
-								"waitTimeInSeconds": 5
+								"waitTimeInSeconds": 1
 							}
 						}
 					]
@@ -377,6 +379,7 @@
 						"value": "@split('77,572,942,849,435,448,191,783,829,465,111,39,354,453,454,455,710,732,761',',')",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "ambev_sending_price_ghub Geo_CO",
@@ -450,7 +453,7 @@
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
-								"waitTimeInSeconds": 10
+								"waitTimeInSeconds": 1
 							}
 						}
 					]
@@ -485,6 +488,7 @@
 						"value": "@split('82,190,393,418,926,928,50,54,118,129,366,713',',')",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "ambev_sending_price_ghub Geo_Sul",
@@ -558,7 +562,7 @@
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
-								"waitTimeInSeconds": 15
+								"waitTimeInSeconds": 1
 							}
 						}
 					]
@@ -593,6 +597,7 @@
 						"value": "@split('61,81,85,86,958,36,389,495,538,539,575,724',',')",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "ambev_sending_price_ghub Geo_RJ",
@@ -666,7 +671,7 @@
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
-								"waitTimeInSeconds": 20
+								"waitTimeInSeconds": 1
 							}
 						}
 					]
@@ -701,6 +706,7 @@
 						"value": "@split('252,292,603,934,940,964,38,67,992,843,352,368,229,457,458,499,762',',')",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "ambev_sending_price_ghub Geo_NO",
@@ -774,7 +780,7 @@
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
-								"waitTimeInSeconds": 25
+								"waitTimeInSeconds": 1
 							}
 						}
 					]
@@ -809,6 +815,7 @@
 						"value": "@split('83,209,329,348,395,543,811,944,975,977,619,112,902,763,956,370,143,725',',')",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "ambev_sending_price_ghub Geo_PR_SPI",
@@ -882,7 +889,7 @@
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
-								"waitTimeInSeconds": 30
+								"waitTimeInSeconds": 1
 							}
 						}
 					]
@@ -917,6 +924,7 @@
 						"value": "@split('295,346,809,825,973,46,52,439,69,135,180,199,146,141,358,546,70,71,598,581,729',',')",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "ambev_sending_price_ghub Geo_BA",
@@ -990,7 +998,7 @@
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
-								"waitTimeInSeconds": 35
+								"waitTimeInSeconds": 1
 							}
 						}
 					]
