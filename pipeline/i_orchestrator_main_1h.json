@@ -282,14 +282,7 @@
 						{
 							"name": "ambev_sending_price_ghub Geo_SP",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 5s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
 								"retry": 0,
@@ -315,14 +308,7 @@
 						{
 							"name": "ambev_sending_pdv_ghub Geo_SP",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 5s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
 								"retry": 0,
@@ -346,25 +332,9 @@
 							}
 						},
 						{
-							"name": "Wait 5s",
-							"type": "Wait",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"waitTimeInSeconds": 1
-							}
-						},
-						{
 							"name": "ambev_sending_estoque_ghub Geo_SP",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 5s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "7.00:00:00",
 								"retry": 0,
@@ -431,14 +401,7 @@
 						{
 							"name": "ambev_sending_price_ghub Geo_CO",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 10s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
 								"retry": 0,
@@ -464,14 +427,7 @@
 						{
 							"name": "ambev_sending_pdv_ghub Geo_CO",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 10s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
 								"retry": 0,
@@ -495,25 +451,9 @@
 							}
 						},
 						{
-							"name": "Wait 10s",
-							"type": "Wait",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"waitTimeInSeconds": 1
-							}
-						},
-						{
 							"name": "ambev_sending_estoque_ghub Geo_CO",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 10s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "7.00:00:00",
 								"retry": 0,
@@ -580,14 +520,7 @@
 						{
 							"name": "ambev_sending_price_ghub Geo_Sul",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 15s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
 								"retry": 0,
@@ -613,14 +546,7 @@
 						{
 							"name": "ambev_sending_pdv_ghub Geo_Sul",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 15s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
 								"retry": 0,
@@ -644,25 +570,9 @@
 							}
 						},
 						{
-							"name": "Wait 15s",
-							"type": "Wait",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"waitTimeInSeconds": 1
-							}
-						},
-						{
 							"name": "ambev_sending_estoque_ghub Geo_Sul",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 15s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "7.00:00:00",
 								"retry": 0,
@@ -729,14 +639,7 @@
 						{
 							"name": "ambev_sending_price_ghub Geo_RJ",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 20s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
 								"retry": 0,
@@ -762,14 +665,7 @@
 						{
 							"name": "ambev_sending_pdv_ghub Geo_RJ",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 20s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
 								"retry": 0,
@@ -793,25 +689,9 @@
 							}
 						},
 						{
-							"name": "Wait 20s",
-							"type": "Wait",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"waitTimeInSeconds": 1
-							}
-						},
-						{
 							"name": "ambev_sending_estoque_ghub Geo_RJ",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 20s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "7.00:00:00",
 								"retry": 0,
@@ -878,14 +758,7 @@
 						{
 							"name": "ambev_sending_price_ghub Geo_NO",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 25s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
 								"retry": 0,
@@ -911,14 +784,7 @@
 						{
 							"name": "ambev_sending_pdv_ghub Geo_NO",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 25s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
 								"retry": 0,
@@ -942,25 +808,9 @@
 							}
 						},
 						{
-							"name": "Wait 25s",
-							"type": "Wait",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"waitTimeInSeconds": 1
-							}
-						},
-						{
 							"name": "ambev_sending_estoque_ghub Geo_NO",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 25s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "7.00:00:00",
 								"retry": 0,
@@ -1027,14 +877,7 @@
 						{
 							"name": "ambev_sending_price_ghub Geo_PR_SPI",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 30s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
 								"retry": 0,
@@ -1060,14 +903,7 @@
 						{
 							"name": "ambev_sending_pdv_ghub Geo_PR_SPI",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 30s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
 								"retry": 0,
@@ -1091,25 +927,9 @@
 							}
 						},
 						{
-							"name": "Wait 30s",
-							"type": "Wait",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"waitTimeInSeconds": 1
-							}
-						},
-						{
 							"name": "ambev_sending_estoque_ghub Geo_PR_SPI",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 30s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "7.00:00:00",
 								"retry": 0,
@@ -1176,14 +996,7 @@
 						{
 							"name": "ambev_sending_price_ghub Geo_BA",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 35s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
 								"retry": 0,
@@ -1209,14 +1022,7 @@
 						{
 							"name": "ambev_sending_pdv_ghub Geo_BA",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 35s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
 								"retry": 0,
@@ -1240,25 +1046,9 @@
 							}
 						},
 						{
-							"name": "Wait 35s",
-							"type": "Wait",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"waitTimeInSeconds": 1
-							}
-						},
-						{
 							"name": "ambev_sending_estoque_ghub Geo_BA",
 							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Wait 35s",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "7.00:00:00",
 								"retry": 0,
