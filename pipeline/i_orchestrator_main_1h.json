@@ -275,7 +275,7 @@
 							"type": "DatabricksNotebook",
 							"dependsOn": [
 								{
-									"activity": "Wait 10s",
+									"activity": "Wait 5s",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -305,6 +305,114 @@
 						},
 						{
 							"name": "ambev_sending_pdv_ghub Geo_SP",
+							"type": "DatabricksNotebook",
+							"dependsOn": [
+								{
+									"activity": "Wait 5s",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.00:30:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_pdv_sending_ghub",
+								"baseParameters": {
+									"unb": {
+										"value": "@{item()}",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricks",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "Wait 5s",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 5
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "List unb Geo_CO",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "ambev_produto_pdv",
+						"dependencyConditions": [
+							"Completed"
+						]
+					},
+					{
+						"activity": "ambev_pdv",
+						"dependencyConditions": [
+							"Completed"
+						]
+					},
+					{
+						"activity": "ambev_cdd",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@split('77,572,942,849,435,448,191,783,829,465,111,39,354,453,454,455,710,732,761',',')",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "ambev_sending_price_ghub Geo_CO",
+							"type": "DatabricksNotebook",
+							"dependsOn": [
+								{
+									"activity": "Wait 10s",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.00:30:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_pricing_sending_ghub",
+								"baseParameters": {
+									"unb": {
+										"value": "@{item()}",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricks",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "ambev_sending_pdv_ghub Geo_CO",
 							"type": "DatabricksNotebook",
 							"dependsOn": [
 								{
@@ -349,7 +457,7 @@
 				}
 			},
 			{
-				"name": "List unb Geo_CO",
+				"name": "List unb Geo_Sul",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -374,12 +482,120 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@split('77,572,942,849,435,448,191,783,829,465,111,39,354,453,454,455,710,732,761',',')",
+						"value": "@split('82,190,393,418,926,928,50,54,118,129,366,713',',')",
 						"type": "Expression"
 					},
 					"activities": [
 						{
-							"name": "ambev_sending_price_ghub Geo_CO",
+							"name": "ambev_sending_price_ghub Geo_Sul",
+							"type": "DatabricksNotebook",
+							"dependsOn": [
+								{
+									"activity": "Wait 15s",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.00:30:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_pricing_sending_ghub",
+								"baseParameters": {
+									"unb": {
+										"value": "@{item()}",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricks",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "ambev_sending_pdv_ghub Geo_Sul",
+							"type": "DatabricksNotebook",
+							"dependsOn": [
+								{
+									"activity": "Wait 15s",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.00:30:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_pdv_sending_ghub",
+								"baseParameters": {
+									"unb": {
+										"value": "@{item()}",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricks",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "Wait 15s",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 15
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "List unb Geo_RJ",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "ambev_produto_pdv",
+						"dependencyConditions": [
+							"Completed"
+						]
+					},
+					{
+						"activity": "ambev_pdv",
+						"dependencyConditions": [
+							"Completed"
+						]
+					},
+					{
+						"activity": "ambev_cdd",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@split('61,81,85,86,958,36,389,495,538,539,575,724',',')",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "ambev_sending_price_ghub Geo_RJ",
 							"type": "DatabricksNotebook",
 							"dependsOn": [
 								{
@@ -412,7 +628,7 @@
 							}
 						},
 						{
-							"name": "ambev_sending_pdv_ghub Geo_CO",
+							"name": "ambev_sending_pdv_ghub Geo_RJ",
 							"type": "DatabricksNotebook",
 							"dependsOn": [
 								{
@@ -457,7 +673,7 @@
 				}
 			},
 			{
-				"name": "List unb Geo_Sul",
+				"name": "List unb Geo_NO",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -482,97 +698,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@split('82,190,393,418,926,928,50,54,118,129,366,713',',')",
+						"value": "@split('252,292,603,934,940,964,38,67,992,843,352,368,229,457,458,499,762',',')",
 						"type": "Expression"
 					},
 					"activities": [
 						{
-							"name": "ambev_sending_price_ghub Geo_Sul",
-							"type": "DatabricksNotebook",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_pricing_sending_ghub",
-								"baseParameters": {
-									"unb": {
-										"value": "@{item()}",
-										"type": "Expression"
-									}
-								}
-							},
-							"linkedServiceName": {
-								"referenceName": "AzureDatabricks",
-								"type": "LinkedServiceReference"
-							}
-						},
-						{
-							"name": "ambev_sending_pdv_ghub Geo_Sul",
-							"type": "DatabricksNotebook",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_pdv_sending_ghub",
-								"baseParameters": {
-									"unb": {
-										"value": "@{item()}",
-										"type": "Expression"
-									}
-								}
-							},
-							"linkedServiceName": {
-								"referenceName": "AzureDatabricks",
-								"type": "LinkedServiceReference"
-							}
-						}
-					]
-				}
-			},
-			{
-				"name": "List unb Geo_RJ",
-				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "ambev_produto_pdv",
-						"dependencyConditions": [
-							"Completed"
-						]
-					},
-					{
-						"activity": "ambev_pdv",
-						"dependencyConditions": [
-							"Completed"
-						]
-					},
-					{
-						"activity": "ambev_cdd",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@split('61,81,85,86,958,36,389,495,538,539,575,724',',')",
-						"type": "Expression"
-					},
-					"activities": [
-						{
-							"name": "ambev_sending_price_ghub Geo_RJ",
+							"name": "ambev_sending_price_ghub Geo_NO",
 							"type": "DatabricksNotebook",
 							"dependsOn": [
 								{
@@ -605,7 +736,7 @@
 							}
 						},
 						{
-							"name": "ambev_sending_pdv_ghub Geo_RJ",
+							"name": "ambev_sending_pdv_ghub Geo_NO",
 							"type": "DatabricksNotebook",
 							"dependsOn": [
 								{
@@ -650,91 +781,6 @@
 				}
 			},
 			{
-				"name": "List unb Geo_NO",
-				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "ambev_produto_pdv",
-						"dependencyConditions": [
-							"Completed"
-						]
-					},
-					{
-						"activity": "ambev_pdv",
-						"dependencyConditions": [
-							"Completed"
-						]
-					},
-					{
-						"activity": "ambev_cdd",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@split('252,292,603,934,940,964,38,67,992,843,352,368,229,457,458,499,762',',')",
-						"type": "Expression"
-					},
-					"activities": [
-						{
-							"name": "ambev_sending_price_ghub Geo_NO",
-							"type": "DatabricksNotebook",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_pricing_sending_ghub",
-								"baseParameters": {
-									"unb": {
-										"value": "@{item()}",
-										"type": "Expression"
-									}
-								}
-							},
-							"linkedServiceName": {
-								"referenceName": "AzureDatabricks",
-								"type": "LinkedServiceReference"
-							}
-						},
-						{
-							"name": "ambev_sending_pdv_ghub Geo_NO",
-							"type": "DatabricksNotebook",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_pdv_sending_ghub",
-								"baseParameters": {
-									"unb": {
-										"value": "@{item()}",
-										"type": "Expression"
-									}
-								}
-							},
-							"linkedServiceName": {
-								"referenceName": "AzureDatabricks",
-								"type": "LinkedServiceReference"
-							}
-						}
-					]
-				}
-			},
-			{
 				"name": "List unb Geo_PR-SPI",
 				"type": "ForEach",
 				"dependsOn": [
@@ -767,7 +813,14 @@
 						{
 							"name": "ambev_sending_price_ghub Geo_PR_SPI",
 							"type": "DatabricksNotebook",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "Wait 30s",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
 							"policy": {
 								"timeout": "0.00:30:00",
 								"retry": 0,
@@ -793,7 +846,14 @@
 						{
 							"name": "ambev_sending_pdv_ghub Geo_PR_SPI",
 							"type": "DatabricksNotebook",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "Wait 30s",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
 							"policy": {
 								"timeout": "0.00:30:00",
 								"retry": 0,
@@ -814,6 +874,15 @@
 							"linkedServiceName": {
 								"referenceName": "AzureDatabricks",
 								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "Wait 30s",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 30
 							}
 						}
 					]
@@ -854,7 +923,7 @@
 							"type": "DatabricksNotebook",
 							"dependsOn": [
 								{
-									"activity": "Wait 20s_copy1",
+									"activity": "Wait 35s",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -887,7 +956,7 @@
 							"type": "DatabricksNotebook",
 							"dependsOn": [
 								{
-									"activity": "Wait 20s_copy1",
+									"activity": "Wait 35s",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -916,12 +985,12 @@
 							}
 						},
 						{
-							"name": "Wait 20s_copy1",
+							"name": "Wait 35s",
 							"type": "Wait",
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
-								"waitTimeInSeconds": 20
+								"waitTimeInSeconds": 35
 							}
 						}
 					]
