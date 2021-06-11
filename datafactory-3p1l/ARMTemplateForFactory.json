@@ -359,7 +359,14 @@
 								{
 									"name": "ambev_sending_price_ghub 2",
 									"type": "DatabricksNotebook",
-									"dependsOn": [],
+									"dependsOn": [
+										{
+											"activity": "Wait 10s",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
 									"policy": {
 										"timeout": "0.00:40:00",
 										"retry": 0,
@@ -385,7 +392,14 @@
 								{
 									"name": "ambev_sending_pdv_ghub 2",
 									"type": "DatabricksNotebook",
-									"dependsOn": [],
+									"dependsOn": [
+										{
+											"activity": "Wait 10s",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
 									"policy": {
 										"timeout": "7.00:00:00",
 										"retry": 0,
@@ -406,6 +420,15 @@
 									"linkedServiceName": {
 										"referenceName": "AzureDatabricks",
 										"type": "LinkedServiceReference"
+									}
+								},
+								{
+									"name": "Wait 10s",
+									"type": "Wait",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"waitTimeInSeconds": 10
 									}
 								}
 							]
@@ -444,7 +467,14 @@
 								{
 									"name": "ambev_sending_price_ghub 3",
 									"type": "DatabricksNotebook",
-									"dependsOn": [],
+									"dependsOn": [
+										{
+											"activity": "Wait 20s",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
 									"policy": {
 										"timeout": "0.00:40:00",
 										"retry": 0,
@@ -470,7 +500,14 @@
 								{
 									"name": "ambev_sending_pdv_ghub 3",
 									"type": "DatabricksNotebook",
-									"dependsOn": [],
+									"dependsOn": [
+										{
+											"activity": "Wait 20s",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
 									"policy": {
 										"timeout": "7.00:00:00",
 										"retry": 0,
@@ -491,6 +528,15 @@
 									"linkedServiceName": {
 										"referenceName": "AzureDatabricks",
 										"type": "LinkedServiceReference"
+									}
+								},
+								{
+									"name": "Wait 20s",
+									"type": "Wait",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"waitTimeInSeconds": 20
 									}
 								}
 							]
