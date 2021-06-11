@@ -241,7 +241,7 @@
 				}
 			},
 			{
-				"name": "List unb 2",
+				"name": "List unb Geo_SP",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -266,12 +266,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@split('576,575,572,546,543,541,539,538,499,495,469,465,458,457,455,454,453,448,439,438,435,418,401,395,393,389,379,374,372,370,368,366,358,354,352,348,346,329,326,322,303,301,297,295,292',',')",
+						"value": "@split('137,297,301,303,578,966,968,970,771,764,204,372,379,216,230,214,231,242,401,469',',')",
 						"type": "Expression"
 					},
 					"activities": [
 						{
-							"name": "ambev_sending_price_ghub 2",
+							"name": "ambev_sending_price_ghub Geo_SP",
 							"type": "DatabricksNotebook",
 							"dependsOn": [
 								{
@@ -304,7 +304,7 @@
 							}
 						},
 						{
-							"name": "ambev_sending_pdv_ghub 2",
+							"name": "ambev_sending_pdv_ghub Geo_SP",
 							"type": "DatabricksNotebook",
 							"dependsOn": [
 								{
