@@ -158,7 +158,7 @@
 						"type": "Expression"
 					},
 					"isSequential": false,
-					"batchCount": 2,
+					"batchCount": 4,
 					"activities": [
 						{
 							"name": "ambev_sending_price_ghub Geo_MG",
@@ -277,7 +277,7 @@
 						"type": "Expression"
 					},
 					"isSequential": false,
-					"batchCount": 2,
+					"batchCount": 4,
 					"activities": [
 						{
 							"name": "ambev_sending_price_ghub Geo_SP",
@@ -396,7 +396,7 @@
 						"type": "Expression"
 					},
 					"isSequential": false,
-					"batchCount": 2,
+					"batchCount": 4,
 					"activities": [
 						{
 							"name": "ambev_sending_price_ghub Geo_CO",
@@ -515,7 +515,7 @@
 						"type": "Expression"
 					},
 					"isSequential": false,
-					"batchCount": 2,
+					"batchCount": 4,
 					"activities": [
 						{
 							"name": "ambev_sending_price_ghub Geo_Sul",
@@ -634,7 +634,7 @@
 						"type": "Expression"
 					},
 					"isSequential": false,
-					"batchCount": 2,
+					"batchCount": 4,
 					"activities": [
 						{
 							"name": "ambev_sending_price_ghub Geo_RJ",
@@ -753,7 +753,7 @@
 						"type": "Expression"
 					},
 					"isSequential": false,
-					"batchCount": 2,
+					"batchCount": 4,
 					"activities": [
 						{
 							"name": "ambev_sending_price_ghub Geo_NO",
@@ -872,7 +872,7 @@
 						"type": "Expression"
 					},
 					"isSequential": false,
-					"batchCount": 2,
+					"batchCount": 4,
 					"activities": [
 						{
 							"name": "ambev_sending_price_ghub Geo_PR_SPI",
@@ -991,7 +991,7 @@
 						"type": "Expression"
 					},
 					"isSequential": false,
-					"batchCount": 2,
+					"batchCount": 4,
 					"activities": [
 						{
 							"name": "ambev_sending_price_ghub Geo_BA",
