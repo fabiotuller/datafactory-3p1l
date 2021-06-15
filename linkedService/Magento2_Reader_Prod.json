@@ -5,8 +5,8 @@
 		"annotations": [],
 		"type": "MySql",
 		"typeProperties": {
-			"connectionString": "server=magento2-db-reader.cg6fiyrlnpmh.us-west-2.rds.amazonaws.com;port=3306;database=menu_marketplace_magento2_production;user=admin;sslmode=0",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZLTNQMUxfOGJjMGIzMDEtNmRkNy00ZDE2LThkMmMtYTQ2MTc0NjEyZGMwIg0KfQ=="
+			"connectionString": "server=magento2-db.cg6fiyrlnpmh.us-west-2.rds.amazonaws.com;port=3306;database=menu_marketplace_magento2_production;user=admin;sslmode=0",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZLTNQMUxfOTc5MWM3Y2ItMzhjMy00Y2M4LTg5NzMtODFjZGQ1YzE3OTgxIg0KfQ=="
 		},
 		"connectVia": {
 			"referenceName": "integrationRuntime1",
