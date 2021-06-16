@@ -166,8 +166,8 @@
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -192,8 +192,8 @@
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -217,9 +217,9 @@
 							"type": "DatabricksNotebook",
 							"dependsOn": [],
 							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"timeout": "0.00:30:00",
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -285,8 +285,8 @@
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -311,8 +311,8 @@
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -336,9 +336,9 @@
 							"type": "DatabricksNotebook",
 							"dependsOn": [],
 							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"timeout": "0.00:30:00",
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -404,8 +404,8 @@
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -430,8 +430,8 @@
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -455,9 +455,9 @@
 							"type": "DatabricksNotebook",
 							"dependsOn": [],
 							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"timeout": "0.00:30:00",
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -523,8 +523,8 @@
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -549,8 +549,8 @@
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -574,9 +574,9 @@
 							"type": "DatabricksNotebook",
 							"dependsOn": [],
 							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"timeout": "0.00:30:00",
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -642,8 +642,8 @@
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -668,8 +668,8 @@
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -693,9 +693,9 @@
 							"type": "DatabricksNotebook",
 							"dependsOn": [],
 							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"timeout": "0.00:30:00",
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -761,8 +761,8 @@
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -787,8 +787,8 @@
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -812,9 +812,9 @@
 							"type": "DatabricksNotebook",
 							"dependsOn": [],
 							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"timeout": "0.00:30:00",
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -880,8 +880,8 @@
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -906,8 +906,8 @@
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -931,9 +931,9 @@
 							"type": "DatabricksNotebook",
 							"dependsOn": [],
 							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"timeout": "0.00:30:00",
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -999,8 +999,8 @@
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -1025,8 +1025,8 @@
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.00:30:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
@@ -1050,9 +1050,9 @@
 							"type": "DatabricksNotebook",
 							"dependsOn": [],
 							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
+								"timeout": "0.00:30:00",
+								"retry": 1,
+								"retryIntervalInSeconds": 5,
 								"secureOutput": false,
 								"secureInput": false
 							},
