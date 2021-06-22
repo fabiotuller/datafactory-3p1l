@@ -2696,6 +2696,13 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "i_orchestrator_main_1h",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
 					}
 				],
 				"type": "BlobEventsTrigger",
@@ -2710,7 +2717,8 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/orchestrator_main_1h')]"
+				"[concat(variables('factoryId'), '/pipelines/orchestrator_main_1h')]",
+				"[concat(variables('factoryId'), '/pipelines/i_orchestrator_main_1h')]"
 			]
 		},
 		{
