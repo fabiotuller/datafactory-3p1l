@@ -235,24 +235,6 @@
 								"dependencyConditions": [
 									"Completed"
 								]
-							},
-							{
-								"activity": "ambev_status_and_notify",
-								"dependencyConditions": [
-									"Skipped"
-								]
-							},
-							{
-								"activity": "ambev_produto",
-								"dependencyConditions": [
-									"Skipped"
-								]
-							},
-							{
-								"activity": "ambev_condicao_pagto",
-								"dependencyConditions": [
-									"Skipped"
-								]
 							}
 						],
 						"userProperties": [],
@@ -371,18 +353,6 @@
 								"activity": "ambev_produto_estoque",
 								"dependencyConditions": [
 									"Completed"
-								]
-							},
-							{
-								"activity": "ambev_produto",
-								"dependencyConditions": [
-									"Skipped"
-								]
-							},
-							{
-								"activity": "ambev_condicao_pagto",
-								"dependencyConditions": [
-									"Skipped"
 								]
 							}
 						],
@@ -503,18 +473,6 @@
 								"dependencyConditions": [
 									"Completed"
 								]
-							},
-							{
-								"activity": "ambev_produto",
-								"dependencyConditions": [
-									"Skipped"
-								]
-							},
-							{
-								"activity": "ambev_condicao_pagto",
-								"dependencyConditions": [
-									"Skipped"
-								]
 							}
 						],
 						"userProperties": [],
@@ -633,18 +591,6 @@
 								"activity": "ambev_produto_estoque",
 								"dependencyConditions": [
 									"Completed"
-								]
-							},
-							{
-								"activity": "ambev_produto",
-								"dependencyConditions": [
-									"Skipped"
-								]
-							},
-							{
-								"activity": "ambev_condicao_pagto",
-								"dependencyConditions": [
-									"Skipped"
 								]
 							}
 						],
@@ -765,24 +711,6 @@
 								"dependencyConditions": [
 									"Completed"
 								]
-							},
-							{
-								"activity": "ambev_produto",
-								"dependencyConditions": [
-									"Skipped"
-								]
-							},
-							{
-								"activity": "ambev_status_and_notify",
-								"dependencyConditions": [
-									"Skipped"
-								]
-							},
-							{
-								"activity": "ambev_condicao_pagto",
-								"dependencyConditions": [
-									"Skipped"
-								]
 							}
 						],
 						"userProperties": [],
@@ -901,24 +829,6 @@
 								"activity": "ambev_produto_estoque",
 								"dependencyConditions": [
 									"Completed"
-								]
-							},
-							{
-								"activity": "ambev_status_and_notify",
-								"dependencyConditions": [
-									"Skipped"
-								]
-							},
-							{
-								"activity": "ambev_produto",
-								"dependencyConditions": [
-									"Skipped"
-								]
-							},
-							{
-								"activity": "ambev_condicao_pagto",
-								"dependencyConditions": [
-									"Skipped"
 								]
 							}
 						],
@@ -1039,24 +949,6 @@
 								"dependencyConditions": [
 									"Completed"
 								]
-							},
-							{
-								"activity": "ambev_produto",
-								"dependencyConditions": [
-									"Skipped"
-								]
-							},
-							{
-								"activity": "ambev_condicao_pagto",
-								"dependencyConditions": [
-									"Skipped"
-								]
-							},
-							{
-								"activity": "ambev_status_and_notify",
-								"dependencyConditions": [
-									"Skipped"
-								]
 							}
 						],
 						"userProperties": [],
@@ -1175,24 +1067,6 @@
 								"activity": "ambev_produto_estoque",
 								"dependencyConditions": [
 									"Completed"
-								]
-							},
-							{
-								"activity": "ambev_status_and_notify",
-								"dependencyConditions": [
-									"Skipped"
-								]
-							},
-							{
-								"activity": "ambev_condicao_pagto",
-								"dependencyConditions": [
-									"Skipped"
-								]
-							},
-							{
-								"activity": "ambev_produto",
-								"dependencyConditions": [
-									"Skipped"
 								]
 							}
 						],
