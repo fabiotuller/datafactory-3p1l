@@ -23,6 +23,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "Magento2"
+		},
 		"annotations": [],
 		"lastPublishTime": "2021-05-13T22:03:07Z"
 	},
