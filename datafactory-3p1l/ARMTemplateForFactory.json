@@ -1744,6 +1744,9 @@
 						}
 					}
 				],
+				"folder": {
+					"name": "Magento2"
+				},
 				"annotations": [],
 				"lastPublishTime": "2021-05-13T22:03:07Z"
 			},
@@ -2136,13 +2139,13 @@
 						}
 					},
 					{
-						"name": "run_customer_cluster_NONE",
+						"name": "run_customer_cluster",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "none",
+								"referenceName": "magento_customer_cluster",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -2157,7 +2160,7 @@
 				"[concat(variables('factoryId'), '/pipelines/run_gsheets_import')]",
 				"[concat(variables('factoryId'), '/pipelines/ingestionFull -MenuPay')]",
 				"[concat(variables('factoryId'), '/pipelines/whatsapp_history')]",
-				"[concat(variables('factoryId'), '/pipelines/none')]"
+				"[concat(variables('factoryId'), '/pipelines/magento_customer_cluster')]"
 			]
 		},
 		{
