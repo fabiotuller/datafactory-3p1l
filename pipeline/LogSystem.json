@@ -23,6 +23,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "General"
+		},
 		"annotations": [],
 		"lastPublishTime": "2021-05-11T14:23:54Z"
 	},
