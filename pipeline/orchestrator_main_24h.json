@@ -37,28 +37,6 @@
 						"source": "magento"
 					}
 				}
-			},
-			{
-				"name": "Execute Pipeline1",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "ambev_sending_product_ghub",
-						"dependencyConditions": [
-							"Completed"
-						]
-					},
-					{
-						"activity": "run_magento2_ingestionFull24h",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"waitOnCompletion": true
-				}
 			}
 		],
 		"annotations": []
