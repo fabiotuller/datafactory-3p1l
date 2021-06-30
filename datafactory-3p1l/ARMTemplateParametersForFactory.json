@@ -17,6 +17,9 @@
 		"MenuPay_Prod_connectionString": {
 			"value": ""
 		},
+		"dw_integration_3p1l_connectionString": {
+			"value": ""
+		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"value": "https://datalake3p1lprod.dfs.core.windows.net"
 		},

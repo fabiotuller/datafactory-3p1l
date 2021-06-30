@@ -23,6 +23,10 @@
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'MenuPay_Prod'"
 		},
+		"dw_integration_3p1l_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'dw_integration_3p1l'"
+		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://datalake3p1lprod.dfs.core.windows.net"
@@ -81,6 +85,9 @@
 					},
 					"MenuPay_Prod_connectionString": {
 						"value": "[parameters('MenuPay_Prod_connectionString')]"
+					},
+					"dw_integration_3p1l_connectionString": {
+						"value": "[parameters('dw_integration_3p1l_connectionString')]"
 					},
 					"AzureDataLakeStorage_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage_properties_typeProperties_url')]"
