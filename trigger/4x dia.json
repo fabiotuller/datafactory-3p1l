@@ -1,0 +1,24 @@
+{
+	"name": "4x dia",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "status_and_notify",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 6,
+				"startTime": "2021-06-30T13:00:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

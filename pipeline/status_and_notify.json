@@ -1,0 +1,31 @@
+{
+	"name": "status_and_notify",
+	"properties": {
+		"activities": [
+			{
+				"name": "ambev_status_and_notify",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.01:00:00",
+					"retry": 1,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_status_and_notify"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "Integration_3p1l"
+		},
+		"annotations": []
+	}
+}
