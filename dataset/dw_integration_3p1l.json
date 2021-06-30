@@ -1,0 +1,12 @@
+{
+	"name": "dw_integration_3p1l",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dw_integration_3p1l",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}

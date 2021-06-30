@@ -9,6 +9,12 @@
 					"referenceName": "orchestrator_main_10min",
 					"type": "PipelineReference"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "i_orchestrator_main_10min",
+					"type": "PipelineReference"
+				}
 			}
 		],
 		"type": "BlobEventsTrigger",
