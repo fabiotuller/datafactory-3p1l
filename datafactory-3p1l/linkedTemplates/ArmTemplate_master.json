@@ -115,12 +115,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"auto-trigger-10min_properties_typeProperties_scope": {
-						"value": "[parameters('auto-trigger-10min_properties_typeProperties_scope')]"
-					},
-					"auto-trigger-1h_properties_typeProperties_scope": {
-						"value": "[parameters('auto-trigger-1h_properties_typeProperties_scope')]"
 					}
 				}
 			},
@@ -141,6 +135,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"auto-trigger-10min_properties_typeProperties_scope": {
+						"value": "[parameters('auto-trigger-10min_properties_typeProperties_scope')]"
+					},
+					"auto-trigger-1h_properties_typeProperties_scope": {
+						"value": "[parameters('auto-trigger-1h_properties_typeProperties_scope')]"
 					}
 				}
 			},
