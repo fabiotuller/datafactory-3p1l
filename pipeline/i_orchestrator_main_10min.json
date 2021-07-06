@@ -22,7 +22,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "integration_ambev",
+						"referenceName": "integration_carrefour",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
