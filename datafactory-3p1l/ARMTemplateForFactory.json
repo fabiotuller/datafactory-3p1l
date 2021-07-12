@@ -23,6 +23,10 @@
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'MenuPay_Prod'"
 		},
+		"cosmosdb_3p1l_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'cosmosdb_3p1l'"
+		},
 		"dw_integration_3p1l_connectionString": {
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'dw_integration_3p1l'"
@@ -1984,15 +1988,16 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "SELECT * FROM ambev_last_estoque",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
+								"type": "CosmosDbSqlApiSource",
+								"preferredRegions": [],
+								"detectDatetime": true
 							},
 							"dataset": {
-								"referenceName": "dw_integration_3p1l",
+								"referenceName": "CosmosDB_integration_3p1l",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"colection": "ambev_last_estoque"
+								}
 							},
 							"firstRowOnly": false
 						}
@@ -2146,7 +2151,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks')]",
-				"[concat(variables('factoryId'), '/datasets/dw_integration_3p1l')]"
+				"[concat(variables('factoryId'), '/datasets/dw_integration_3p1l')]",
+				"[concat(variables('factoryId'), '/datasets/CosmosDB_integration_3p1l')]"
 			]
 		},
 		{
@@ -3047,6 +3053,34 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/CosmosDB_integration_3p1l')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "cosmosdb_3p1l",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"colection": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "CosmosDbSqlApiCollection",
+				"schema": {},
+				"typeProperties": {
+					"collectionName": {
+						"value": "@dataset().colection",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/cosmosdb_3p1l')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/MySql_Magento2')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -3235,6 +3269,25 @@
 				"type": "MySql",
 				"typeProperties": {
 					"connectionString": "[parameters('MenuPay_Prod_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime1",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/cosmosdb_3p1l')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "CosmosDb",
+				"typeProperties": {
+					"connectionString": "[parameters('cosmosdb_3p1l_connectionString')]"
 				},
 				"connectVia": {
 					"referenceName": "integrationRuntime1",

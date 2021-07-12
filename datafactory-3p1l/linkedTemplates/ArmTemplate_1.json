@@ -13,6 +13,41 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/serving_customer')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "run_serving_customers",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/kitchen_to_serving/serving_customers"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"folder": {
+					"name": "Magento2/serving"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-05-04T21:21:14Z"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/serving_orders')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -218,6 +253,32 @@
 				},
 				"annotations": [],
 				"lastPublishTime": "2021-05-14T20:33:06Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CosmosDB_integration_3p1l')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "cosmosdb_3p1l",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"colection": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "CosmosDbSqlApiCollection",
+				"schema": {},
+				"typeProperties": {
+					"collectionName": {
+						"value": "@dataset().colection",
+						"type": "Expression"
+					}
+				}
 			},
 			"dependsOn": []
 		},
@@ -1065,15 +1126,16 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "SELECT * FROM ambev_last_estoque",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
+								"type": "CosmosDbSqlApiSource",
+								"preferredRegions": [],
+								"detectDatetime": true
 							},
 							"dataset": {
-								"referenceName": "dw_integration_3p1l",
+								"referenceName": "CosmosDB_integration_3p1l",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"colection": "ambev_last_estoque"
+								}
 							},
 							"firstRowOnly": false
 						}
@@ -1226,7 +1288,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/dw_integration_3p1l')]"
+				"[concat(variables('factoryId'), '/datasets/dw_integration_3p1l')]",
+				"[concat(variables('factoryId'), '/datasets/CosmosDB_integration_3p1l')]"
 			]
 		},
 		{
@@ -1608,133 +1671,12 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/MySql_Magento2')]",
 				"[concat(variables('factoryId'), '/pipelines/ingestionFull')]",
+				"[concat(variables('factoryId'), '/pipelines/serving_customer')]",
 				"[concat(variables('factoryId'), '/pipelines/serving_orders')]",
 				"[concat(variables('factoryId'), '/pipelines/serving_stores')]",
 				"[concat(variables('factoryId'), '/pipelines/serving_sellers')]",
 				"[concat(variables('factoryId'), '/pipelines/serving_products')]",
 				"[concat(variables('factoryId'), '/pipelines/ingestionIncremental')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/orchestrator_main_1h')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "run_gsheet_import",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "run_gsheets_import",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "run_ingestion_full_MenuPay",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "ingestionFull -MenuPay",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"source": "payments"
-							}
-						}
-					},
-					{
-						"name": "run_get_whatsapp_history",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "whatsapp_history",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "run_customer_cluster",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "magento_customer_cluster",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"annotations": [],
-				"lastPublishTime": "2021-05-13T00:20:17Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/ingestionFull -MenuPay')]",
-				"[concat(variables('factoryId'), '/pipelines/whatsapp_history')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/orchestrator_main_24h')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "ambev_sending_product_ghub",
-						"type": "DatabricksNotebook",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_product_sending_ghub"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureDatabricks",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "run_magento2_ingestionFull24h",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "ingestionFull_1",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"source": "magento"
-							}
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/ingestionFull_1')]"
 			]
 		}
 	]

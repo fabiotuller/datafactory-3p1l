@@ -23,6 +23,10 @@
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'MenuPay_Prod'"
 		},
+		"cosmosdb_3p1l_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'cosmosdb_3p1l'"
+		},
 		"dw_integration_3p1l_connectionString": {
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'dw_integration_3p1l'"
@@ -85,6 +89,9 @@
 					},
 					"MenuPay_Prod_connectionString": {
 						"value": "[parameters('MenuPay_Prod_connectionString')]"
+					},
+					"cosmosdb_3p1l_connectionString": {
+						"value": "[parameters('cosmosdb_3p1l_connectionString')]"
 					},
 					"dw_integration_3p1l_connectionString": {
 						"value": "[parameters('dw_integration_3p1l_connectionString')]"

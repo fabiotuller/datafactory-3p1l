@@ -23,6 +23,10 @@
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'MenuPay_Prod'"
 		},
+		"cosmosdb_3p1l_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'cosmosdb_3p1l'"
+		},
 		"dw_integration_3p1l_connectionString": {
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'dw_integration_3p1l'"
@@ -230,6 +234,25 @@
 				"type": "MySql",
 				"typeProperties": {
 					"connectionString": "[parameters('MenuPay_Prod_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime1",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/cosmosdb_3p1l')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "CosmosDb",
+				"typeProperties": {
+					"connectionString": "[parameters('cosmosdb_3p1l_connectionString')]"
 				},
 				"connectVia": {
 					"referenceName": "integrationRuntime1",
@@ -1613,43 +1636,6 @@
 					"name": "General"
 				},
 				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/serving_customer')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "run_serving_customers",
-						"type": "DatabricksNotebook",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"notebookPath": "/Users/fabiotuller@outlook.com/prod/kitchen_to_serving/serving_customers"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureDatabricks",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"folder": {
-					"name": "Magento2/serving"
-				},
-				"annotations": [],
-				"lastPublishTime": "2021-05-04T21:21:14Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks')]"

@@ -17,6 +17,9 @@
 		"MenuPay_Prod_connectionString": {
 			"value": ""
 		},
+		"cosmosdb_3p1l_connectionString": {
+			"value": ""
+		},
 		"dw_integration_3p1l_connectionString": {
 			"value": ""
 		},
