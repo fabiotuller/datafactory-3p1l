@@ -1,0 +1,23 @@
+{
+	"name": "CosmosDB_integration_3p1l",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "cosmosdb_3p1l",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"colection": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "CosmosDbSqlApiCollection",
+		"schema": {},
+		"typeProperties": {
+			"collectionName": {
+				"value": "@dataset().colection",
+				"type": "Expression"
+			}
+		}
+	}
+}
