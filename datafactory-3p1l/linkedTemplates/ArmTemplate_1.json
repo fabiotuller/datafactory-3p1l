@@ -1060,7 +1060,7 @@
 							"source": {
 								"type": "CosmosDbSqlApiSource",
 								"query": {
-									"value": "@concat('select * from c where c.datetime between ', '\"',getPastTime(10, 'Minute'),'\" and \"', getPastTime(0, 'Minute'),'\"')",
+									"value": "@concat('select * from c where c.datetime between ', replace(concat('\"',getPastTime(10, 'Minute'),'\"'),'T',' '),' and ', replace(concat('\"',getPastTime(0, 'Minute'),'\"'),'T',' '))",
 									"type": "Expression"
 								},
 								"preferredRegions": [],
@@ -1099,7 +1099,7 @@
 							"source": {
 								"type": "CosmosDbSqlApiSource",
 								"query": {
-									"value": "@concat('select * from c where c.datetime between ', '\"',getPastTime(10, 'Minute'),'\" and \"', getPastTime(0, 'Minute'),'\"')",
+									"value": "@concat('select * from c where c.datetime between ', replace(concat('\"',getPastTime(10, 'Minute'),'\"'),'T',' '),' and ', replace(concat('\"',getPastTime(0, 'Minute'),'\"'),'T',' '))",
 									"type": "Expression"
 								},
 								"preferredRegions": [],
@@ -1138,7 +1138,7 @@
 							"source": {
 								"type": "CosmosDbSqlApiSource",
 								"query": {
-									"value": "@concat('select * from c where c.datetime between ', '\"',getPastTime(10, 'Minute'),'\" and \"', utcnow(),'\"')",
+									"value": "@concat('select * from c where c.datetime between ', replace(concat('\"',getPastTime(10, 'Minute'),'\"'),'T',' '),' and ', replace(concat('\"',getPastTime(0, 'Minute'),'\"'),'T',' '))",
 									"type": "Expression"
 								},
 								"preferredRegions": [],
