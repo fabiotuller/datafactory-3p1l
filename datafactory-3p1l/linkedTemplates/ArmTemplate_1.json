@@ -1126,16 +1126,15 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "CosmosDbSqlApiSource",
-								"preferredRegions": [],
-								"detectDatetime": true
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT * FROM ambev_last_estoque",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
 							},
 							"dataset": {
-								"referenceName": "CosmosDB_integration_3p1l",
+								"referenceName": "dw_integration_3p1l",
 								"type": "DatasetReference",
-								"parameters": {
-									"colection": "ambev_last_estoque"
-								}
+								"parameters": {}
 							},
 							"firstRowOnly": false
 						}
@@ -1288,8 +1287,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/dw_integration_3p1l')]",
-				"[concat(variables('factoryId'), '/datasets/CosmosDB_integration_3p1l')]"
+				"[concat(variables('factoryId'), '/datasets/dw_integration_3p1l')]"
 			]
 		},
 		{
