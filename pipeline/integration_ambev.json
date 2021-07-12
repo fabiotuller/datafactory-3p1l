@@ -209,14 +209,16 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT * FROM ambev_last_estoque",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+						"type": "CosmosDbSqlApiSource",
+						"preferredRegions": [],
+						"detectDatetime": true
 					},
 					"dataset": {
-						"referenceName": "dw_integration_3p1l",
-						"type": "DatasetReference"
+						"referenceName": "CosmosDB_integration_3p1l",
+						"type": "DatasetReference",
+						"parameters": {
+							"colection": "ambev_last_estoque"
+						}
 					},
 					"firstRowOnly": false
 				}
