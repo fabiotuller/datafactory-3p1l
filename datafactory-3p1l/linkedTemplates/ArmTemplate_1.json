@@ -1058,15 +1058,20 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "SELECT * FROM ambev_last_produto_pdv",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
+								"type": "CosmosDbSqlApiSource",
+								"query": {
+									"value": "@concat('select * from c where c.datetime between ', '\"',getPastTime(10, 'Minute'),'\" and \"', getPastTime(0, 'Minute'),'\"')",
+									"type": "Expression"
+								},
+								"preferredRegions": [],
+								"detectDatetime": true
 							},
 							"dataset": {
-								"referenceName": "dw_integration_3p1l",
+								"referenceName": "CosmosDB_integration_3p1l",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"colection": "ambev_last_produto_pdv"
+								}
 							},
 							"firstRowOnly": false
 						}
@@ -1092,15 +1097,20 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "SELECT * FROM ambev_last_pdv",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
+								"type": "CosmosDbSqlApiSource",
+								"query": {
+									"value": "@concat('select * from c where c.datetime between ', '\"',getPastTime(10, 'Minute'),'\" and \"', getPastTime(0, 'Minute'),'\"')",
+									"type": "Expression"
+								},
+								"preferredRegions": [],
+								"detectDatetime": true
 							},
 							"dataset": {
-								"referenceName": "dw_integration_3p1l",
+								"referenceName": "CosmosDB_integration_3p1l",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"colection": "ambev_last_pdv"
+								}
 							},
 							"firstRowOnly": false
 						}
@@ -1126,15 +1136,20 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "SELECT * FROM ambev_last_estoque",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
+								"type": "CosmosDbSqlApiSource",
+								"query": {
+									"value": "@concat('select * from c where c.datetime between ', '\"',getPastTime(10, 'Minute'),'\" and \"', utcnow(),'\"')",
+									"type": "Expression"
+								},
+								"preferredRegions": [],
+								"detectDatetime": true
 							},
 							"dataset": {
-								"referenceName": "dw_integration_3p1l",
+								"referenceName": "CosmosDB_integration_3p1l",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"colection": "ambev_last_estoque"
+								}
 							},
 							"firstRowOnly": false
 						}
@@ -1287,7 +1302,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/dw_integration_3p1l')]"
+				"[concat(variables('factoryId'), '/datasets/CosmosDB_integration_3p1l')]"
 			]
 		},
 		{
