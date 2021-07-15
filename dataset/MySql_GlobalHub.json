@@ -1,0 +1,24 @@
+{
+	"name": "MySql_GlobalHub",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "GlobalHub_Prod",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": {
+				"value": "@dataset().tableName",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
