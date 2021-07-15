@@ -65,7 +65,7 @@
 					{
 						"activity": "Copy",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
@@ -84,6 +84,33 @@
 						"source": "globalhub",
 						"table_name": "product"
 					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "run_merge_table_orders_price_stock_integration",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "exec_notebook-raw_to_kitchen",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/fabiotuller@outlook.com/prod/orders_price_stock_integration"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureDatabricks",
