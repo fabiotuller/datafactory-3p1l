@@ -11,6 +11,9 @@
 		"AzureDatabricks_accessToken": {
 			"value": ""
 		},
+		"GlobalHub_Prod_connectionString": {
+			"value": ""
+		},
 		"Magento2_Reader_Prod_connectionString": {
 			"value": ""
 		},

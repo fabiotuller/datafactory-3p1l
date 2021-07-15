@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'accessToken' de 'AzureDatabricks'"
 		},
+		"GlobalHub_Prod_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'GlobalHub_Prod'"
+		},
 		"Magento2_Reader_Prod_connectionString": {
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'Magento2_Reader_Prod'"
@@ -83,6 +87,9 @@
 					},
 					"AzureDatabricks_accessToken": {
 						"value": "[parameters('AzureDatabricks_accessToken')]"
+					},
+					"GlobalHub_Prod_connectionString": {
+						"value": "[parameters('GlobalHub_Prod_connectionString')]"
 					},
 					"Magento2_Reader_Prod_connectionString": {
 						"value": "[parameters('Magento2_Reader_Prod_connectionString')]"
