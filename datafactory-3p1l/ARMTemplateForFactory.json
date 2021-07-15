@@ -130,20 +130,6 @@
 							"waitOnCompletion": true,
 							"parameters": {}
 						}
-					},
-					{
-						"name": "run_ingestion_GHub",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "ingestion_GHub",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
 					}
 				],
 				"folder": {
@@ -153,8 +139,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/integration_ambev')]",
-				"[concat(variables('factoryId'), '/pipelines/integration_carrefour')]",
-				"[concat(variables('factoryId'), '/pipelines/ingestion_GHub')]"
+				"[concat(variables('factoryId'), '/pipelines/integration_carrefour')]"
 			]
 		},
 		{
@@ -1813,7 +1798,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "MySqlSource",
-								"query": "SELECT distinct\nid as entity_id, created_date as created_at, updated_date as updated_at, sku, seller_id, list_price, sale_price, promo_price, inventory, status, packing \nFROM product p where\nupdated_date BETWEEN CURRENT_DATE()-1 and CURRENT_DATE() and seller_id IN(198,200,201) "
+								"query": "SELECT distinct\nid as entity_id, created_date as created_at, updated_date as updated_at, sku, seller_id, list_price, sale_price, promo_price, inventory, status, packing \nFROM product p where seller_id IN(198,200,201) "
 							},
 							"sink": {
 								"type": "ParquetSink",
@@ -1874,7 +1859,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Users/fabiotuller@outlook.com/prod/raw_to_kitchen/raw_to_kitchen_inc",
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/raw_to_kitchen/raw_to_kitchen_full",
 							"baseParameters": {
 								"on_id": "vazio",
 								"source": "globalhub",
@@ -2713,6 +2698,20 @@
 								}
 							]
 						}
+					},
+					{
+						"name": "run_ingestion_GHub",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "ingestion_GHub",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
 					}
 				],
 				"annotations": [],
@@ -2720,6 +2719,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/MySql_Magento2')]",
+				"[concat(variables('factoryId'), '/pipelines/ingestion_GHub')]",
 				"[concat(variables('factoryId'), '/pipelines/ingestionFull')]",
 				"[concat(variables('factoryId'), '/pipelines/serving_customer')]",
 				"[concat(variables('factoryId'), '/pipelines/serving_orders')]",

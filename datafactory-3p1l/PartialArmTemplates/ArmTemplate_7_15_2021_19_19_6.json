@@ -6,48 +6,12 @@
 			"type": "string",
 			"metadata": "Nome do Data Factory",
 			"defaultValue": "datafactory-3p1l"
-		},
-		"auto-trigger-10min_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/2c12d660-e733-48bc-97bd-d8528fdae002/resourceGroups/Eng-Datalake-3P1L/providers/Microsoft.Storage/storageAccounts/datalake3p1lprod"
-		},
-		"auto-trigger-1h_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/2c12d660-e733-48bc-97bd-d8528fdae002/resourceGroups/Eng-Datalake-3P1L/providers/Microsoft.Storage/storageAccounts/datalake3p1lprod"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/4x dia')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "status_and_notify",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Hour",
-						"interval": 6,
-						"startTime": "2021-06-30T13:00:00Z",
-						"timeZone": "UTC"
-					}
-				}
-			},
-			"dependsOn": []
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/i_orchestrator_main_10min')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -64,8 +28,7 @@
 								"referenceName": "integration_ambev",
 								"type": "PipelineReference"
 							},
-							"waitOnCompletion": true,
-							"parameters": {}
+							"waitOnCompletion": true
 						}
 					},
 					{
@@ -78,8 +41,109 @@
 								"referenceName": "integration_carrefour",
 								"type": "PipelineReference"
 							},
-							"waitOnCompletion": true,
-							"parameters": {}
+							"waitOnCompletion": true
+						}
+					}
+				],
+				"folder": {
+					"name": "Integration_3p1l"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ingestion_GHub')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "MySqlSource",
+								"query": "SELECT distinct\nid as entity_id, created_date as created_at, updated_date as updated_at, sku, seller_id, list_price, sale_price, promo_price, inventory, status, packing \nFROM product p where seller_id IN(198,200,201) "
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "MySql_GlobalHub",
+								"type": "DatasetReference",
+								"parameters": {
+									"tableName": "product"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_parquet",
+								"type": "DatasetReference",
+								"parameters": {
+									"layerName": "menu_raw",
+									"sourceName": "globalhub/product"
+								}
+							}
+						]
+					},
+					{
+						"name": "exec_notebook-raw_to_kitchen",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Copy",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/raw_to_kitchen/raw_to_kitchen_full",
+							"baseParameters": {
+								"on_id": "vazio",
+								"source": "globalhub",
+								"table_name": "product"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks",
+							"type": "LinkedServiceReference"
 						}
 					}
 				],
@@ -207,8 +271,7 @@
 											"referenceName": "serving_customer",
 											"type": "PipelineReference"
 										},
-										"waitOnCompletion": true,
-										"parameters": {}
+										"waitOnCompletion": true
 									}
 								},
 								{
@@ -234,8 +297,7 @@
 											"referenceName": "serving_orders",
 											"type": "PipelineReference"
 										},
-										"waitOnCompletion": true,
-										"parameters": {}
+										"waitOnCompletion": true
 									}
 								},
 								{
@@ -261,8 +323,7 @@
 											"referenceName": "serving_stores",
 											"type": "PipelineReference"
 										},
-										"waitOnCompletion": true,
-										"parameters": {}
+										"waitOnCompletion": true
 									}
 								},
 								{
@@ -288,8 +349,7 @@
 											"referenceName": "serving_sellers",
 											"type": "PipelineReference"
 										},
-										"waitOnCompletion": true,
-										"parameters": {}
+										"waitOnCompletion": true
 									}
 								},
 								{
@@ -315,8 +375,7 @@
 											"referenceName": "serving_products",
 											"type": "PipelineReference"
 										},
-										"waitOnCompletion": true,
-										"parameters": {}
+										"waitOnCompletion": true
 									}
 								},
 								{
@@ -336,8 +395,7 @@
 											"referenceName": "ingestionIncremental",
 											"type": "PipelineReference"
 										},
-										"waitOnCompletion": true,
-										"parameters": {}
+										"waitOnCompletion": true
 									}
 								},
 								{
@@ -381,8 +439,7 @@
 											"referenceName": "LogSystem",
 											"type": "PipelineReference"
 										},
-										"waitOnCompletion": false,
-										"parameters": {}
+										"waitOnCompletion": false
 									}
 								}
 							]
@@ -398,239 +455,15 @@
 								"referenceName": "ingestion_GHub",
 								"type": "PipelineReference"
 							},
-							"waitOnCompletion": true,
-							"parameters": {}
+							"waitOnCompletion": true
 						}
 					}
 				],
 				"annotations": [],
 				"lastPublishTime": "2021-05-15T16:27:24Z"
 			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/orchestrator_main_1h')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "run_gsheet_import",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "run_gsheets_import",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "run_ingestion_full_MenuPay",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "ingestionFull -MenuPay",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"source": "payments"
-							}
-						}
-					},
-					{
-						"name": "run_get_whatsapp_history",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "whatsapp_history",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "run_customer_cluster",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "magento_customer_cluster",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"annotations": [],
-				"lastPublishTime": "2021-05-13T00:20:17Z"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/orchestrator_main_24h')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "ambev_sending_product_ghub",
-						"type": "DatabricksNotebook",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_product_sending_ghub"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureDatabricks",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "run_magento2_ingestionFull24h",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "ingestionFull_1",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"source": "magento"
-							}
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/auto-trigger-10min')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "orchestrator_main_10min",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "i_orchestrator_main_10min",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/trigger-adf/blobs/",
-					"blobPathEndsWith": "10min",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('auto-trigger-10min_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
-					]
-				}
-			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/orchestrator_main_10min')]",
-				"[concat(variables('factoryId'), '/pipelines/i_orchestrator_main_10min')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/auto-trigger-1h')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "orchestrator_main_1h",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/trigger-adf/blobs/",
-					"blobPathEndsWith": "1h",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('auto-trigger-1h_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/orchestrator_main_1h')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/trigger-24h')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "orchestrator_main_24h",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2021-05-04T22:00:00",
-						"timeZone": "E. South America Standard Time",
-						"schedule": {
-							"minutes": [
-								30
-							],
-							"hours": [
-								21
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/orchestrator_main_24h')]"
+				"[concat(variables('factoryId'), '/pipelines/ingestion_GHub')]"
 			]
 		}
 	]
