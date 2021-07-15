@@ -130,6 +130,20 @@
 							"waitOnCompletion": true,
 							"parameters": {}
 						}
+					},
+					{
+						"name": "run_ingestion_GHub",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "ingestion_GHub",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
 					}
 				],
 				"folder": {
@@ -139,7 +153,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/integration_ambev')]",
-				"[concat(variables('factoryId'), '/pipelines/integration_carrefour')]"
+				"[concat(variables('factoryId'), '/pipelines/integration_carrefour')]",
+				"[concat(variables('factoryId'), '/pipelines/ingestion_GHub')]"
 			]
 		},
 		{
