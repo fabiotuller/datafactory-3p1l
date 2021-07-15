@@ -1798,7 +1798,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "MySqlSource",
-								"query": "SELECT distinct\nid as entity_id, created_date as created_at, updated_date as updated_at, sku, seller_id, list_price, sale_price, promo_price, inventory, status, packing \nFROM product p where seller_id IN(198,200,201) "
+								"query": "SELECT distinct\nid as entity_id, created_date as created_at, updated_date as updated_at, sku, seller_id, list_price, sale_price, promo_price, inventory, status, packing, \nCASE \n\twhen seller_id = 198 then 903266\n\twhen seller_id = 200 then 922788\n\twhen seller_id = 201 then 972636\nend magento_seller_id\nFROM product p where seller_id IN(198,200,201) "
 							},
 							"sink": {
 								"type": "ParquetSink",
