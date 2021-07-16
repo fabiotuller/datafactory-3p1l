@@ -78,7 +78,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/fabiotuller@outlook.com/prod/raw_to_kitchen/raw_to_kitchen_full",
+					"notebookPath": "/Users/fabiotuller@outlook.com/prod/raw_to_kitchen/raw_to_kitchen_full_ghub",
 					"baseParameters": {
 						"on_id": "vazio",
 						"source": "globalhub",
