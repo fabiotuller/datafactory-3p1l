@@ -21,6 +21,398 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/integration_ambev')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ambev_produto",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/integration produto"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "ambev_produto_pdv",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/integration produto_pdv"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "ambev_produto_estoque",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/integration produto_estoque"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "ambev_pdv",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/integration pdv"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "ambev_condicao_pagto",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/integration condicao_pagto"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "ambev_cdd",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/integration cdd"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "get_unb_to_send_price",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "ambev_produto_pdv",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "CosmosDbSqlApiSource",
+								"query": {
+									"value": "@concat('select * from c where c.datetime between ', replace(concat('\"',getPastTime(10, 'Minute'),'\"'),'T',' '),' and ', replace(concat('\"',getPastTime(0, 'Minute'),'\"'),'T',' '))",
+									"type": "Expression"
+								},
+								"preferredRegions": [],
+								"detectDatetime": true
+							},
+							"dataset": {
+								"referenceName": "CosmosDB_integration_3p1l",
+								"type": "DatasetReference",
+								"parameters": {
+									"colection": "ambev_last_produto_pdv"
+								}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "get_unb_to_send_pdv",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "ambev_pdv",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "CosmosDbSqlApiSource",
+								"query": {
+									"value": "@concat('select * from c where c.datetime between ', replace(concat('\"',getPastTime(10, 'Minute'),'\"'),'T',' '),' and ', replace(concat('\"',getPastTime(0, 'Minute'),'\"'),'T',' '))",
+									"type": "Expression"
+								},
+								"preferredRegions": [],
+								"detectDatetime": true
+							},
+							"dataset": {
+								"referenceName": "CosmosDB_integration_3p1l",
+								"type": "DatasetReference",
+								"parameters": {
+									"colection": "ambev_last_pdv"
+								}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "get_unb_to_send_estoque",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "ambev_produto_estoque",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "CosmosDbSqlApiSource",
+								"query": {
+									"value": "@concat('select * from c where c.datetime between ', replace(concat('\"',getPastTime(10, 'Minute'),'\"'),'T',' '),' and ', replace(concat('\"',getPastTime(0, 'Minute'),'\"'),'T',' '))",
+									"type": "Expression"
+								},
+								"preferredRegions": [],
+								"detectDatetime": true
+							},
+							"dataset": {
+								"referenceName": "CosmosDB_integration_3p1l",
+								"type": "DatasetReference",
+								"parameters": {
+									"colection": "ambev_last_estoque"
+								}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "List unbs price",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "get_unb_to_send_price",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('get_unb_to_send_price').output.value",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "ambev_sending_price_ghub",
+									"type": "DatabricksNotebook",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.00:30:00",
+										"retry": 1,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_pricing_sending_ghub",
+										"baseParameters": {
+											"unb": {
+												"value": "@string(item().unb)",
+												"type": "Expression"
+											}
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "AzureDatabricks",
+										"type": "LinkedServiceReference"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "List unbs stock",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "get_unb_to_send_estoque",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('get_unb_to_send_estoque').output.value",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "ambev_sending_estoque_ghub",
+									"type": "DatabricksNotebook",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.00:30:00",
+										"retry": 1,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_estoque_sending_ghub",
+										"baseParameters": {
+											"unb": {
+												"value": "@string(item().unb)",
+												"type": "Expression"
+											}
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "AzureDatabricks",
+										"type": "LinkedServiceReference"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "List unbs pdv",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "get_unb_to_send_pdv",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('get_unb_to_send_pdv').output.value",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "ambev_sending_pdv_ghub",
+									"type": "DatabricksNotebook",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.00:30:00",
+										"retry": 1,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"notebookPath": "/Users/fabiotuller@outlook.com/prod/ambev/ambev_load_pdv_sending_ghub",
+										"baseParameters": {
+											"unb": {
+												"value": "@string(item().unb)",
+												"type": "Expression"
+											}
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "AzureDatabricks",
+										"type": "LinkedServiceReference"
+									}
+								}
+							]
+						}
+					}
+				],
+				"folder": {
+					"name": "Integration_3p1l/Sellers/Ambev"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/4x dia')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -88,7 +480,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/integration_ambev')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/orchestrator_main_10min')]",
@@ -445,13 +839,13 @@
 						}
 					},
 					{
-						"name": "run_get_whatsapp_history",
+						"name": "run_get_whatsapp_history-DUMMY",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "whatsapp_history",
+								"referenceName": "dummy",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,

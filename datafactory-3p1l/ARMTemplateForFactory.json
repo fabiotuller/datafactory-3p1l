@@ -98,6 +98,26 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/dummy')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Wait 1s",
+						"type": "Wait",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 1
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/i_orchestrator_main_10min')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -2810,13 +2830,13 @@
 						}
 					},
 					{
-						"name": "run_get_whatsapp_history",
+						"name": "run_get_whatsapp_history-DUMMY",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "whatsapp_history",
+								"referenceName": "dummy",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -2844,7 +2864,7 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/run_gsheets_import')]",
 				"[concat(variables('factoryId'), '/pipelines/ingestionFull -MenuPay')]",
-				"[concat(variables('factoryId'), '/pipelines/whatsapp_history')]",
+				"[concat(variables('factoryId'), '/pipelines/dummy')]",
 				"[concat(variables('factoryId'), '/pipelines/magento_customer_cluster')]"
 			]
 		},
