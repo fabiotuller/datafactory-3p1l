@@ -38,7 +38,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "whatsapp_history",
+						"referenceName": "dummy",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
