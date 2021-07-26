@@ -2830,13 +2830,13 @@
 						}
 					},
 					{
-						"name": "run_get_whatsapp_history-DUMMY",
+						"name": "run_get_whatsapp_history",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "dummy",
+								"referenceName": "whatsapp_history",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -2864,7 +2864,7 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/run_gsheets_import')]",
 				"[concat(variables('factoryId'), '/pipelines/ingestionFull -MenuPay')]",
-				"[concat(variables('factoryId'), '/pipelines/dummy')]",
+				"[concat(variables('factoryId'), '/pipelines/whatsapp_history')]",
 				"[concat(variables('factoryId'), '/pipelines/magento_customer_cluster')]"
 			]
 		},

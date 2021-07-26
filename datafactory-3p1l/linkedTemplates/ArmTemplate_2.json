@@ -839,13 +839,13 @@
 						}
 					},
 					{
-						"name": "run_get_whatsapp_history-DUMMY",
+						"name": "run_get_whatsapp_history",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "dummy",
+								"referenceName": "whatsapp_history",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
