@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'accessToken' de 'AzureDatabricks'"
 		},
+		"AzureFileStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'AzureFileStorage1'"
+		},
 		"GlobalHub_Prod_connectionString": {
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'GlobalHub_Prod'"
@@ -124,20 +128,6 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "ambev_pipeline",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "integration_ambev",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
 						"name": "carrefour_pipeline",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
@@ -158,7 +148,6 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/integration_ambev')]",
 				"[concat(variables('factoryId'), '/pipelines/integration_carrefour')]"
 			]
 		},
@@ -3480,6 +3469,26 @@
 						"value": "[parameters('AzureDatabricks_accessToken')]"
 					},
 					"existingClusterId": "0505-153325-loath60"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime1",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureFileStorage1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureFileStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureFileStorage1_connectionString')]",
+					"fileShare": "sellerteste001"
 				},
 				"connectVia": {
 					"referenceName": "integrationRuntime1",

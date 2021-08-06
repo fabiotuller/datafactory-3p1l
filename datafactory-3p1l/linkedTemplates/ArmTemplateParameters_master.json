@@ -11,6 +11,9 @@
 		"AzureDatabricks_accessToken": {
 			"value": ""
 		},
+		"AzureFileStorage1_connectionString": {
+			"value": ""
+		},
 		"GlobalHub_Prod_connectionString": {
 			"value": ""
 		},
