@@ -3,19 +3,6 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ambev_pipeline",
-				"type": "ExecutePipeline",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "integration_ambev",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
 				"name": "carrefour_pipeline",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
