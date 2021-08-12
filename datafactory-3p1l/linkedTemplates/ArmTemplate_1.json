@@ -13,6 +13,67 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/integration_carrefour')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "run_ingestion_carrefour",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/carrefour/carrefour_ingestion_integration"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "run_to_ghub_carrefour",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "run_ingestion_carrefour",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/carrefour/product_to_ghub_carrefour"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"folder": {
+					"name": "Integration_3p1l/Sellers/Carrefour"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/magento_customer_cluster')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -548,7 +609,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/integration_carrefour')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ingestionFull -MenuPay')]",
@@ -808,138 +871,6 @@
 				},
 				"annotations": [],
 				"lastPublishTime": "2021-05-14T17:27:32Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/MySql_Magento2')]",
-				"[concat(variables('factoryId'), '/datasets/ds_parquet')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ingestionFull_1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "ListTables",
-						"type": "ForEach",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@split('catalog_product_link_type,catalog_product_link,marketplace_product,catalog_product_entity_tier_price,cataloginventory_stock,catalog_category_product,catalog_category_entity_varchar,catalog_category_entity_text,catalog_category_entity_int,catalog_category_entity_datetime,catalog_category_entity,take_rate_seller_menu,inventory_reservation,sales_order_status,wishlist_item,wishlist,url_rewrite,search_query,salesrule_coupon,salesrule,payment_bank_slip_deadline,menu_supplier_payments,menu_supplier_credit,directory_country_region,customer_group,core_config_data,catalogrule,catalog_product_website,attendance_segments,store_website,store_group,store,merlin_integration_queue_orders,menu_salesman,marketplace_shippinglist,globalhub_distribution_centers,eav_attribute_option_value,eav_attribute_option,eav_attribute,admin_user_tp,admin_user',',')",
-								"type": "Expression"
-							},
-							"batchCount": 50,
-							"activities": [
-								{
-									"name": "CopyFull",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "MySqlSource",
-											"query": {
-												"value": "SELECT * FROM @{item()}",
-												"type": "Expression"
-											}
-										},
-										"sink": {
-											"type": "ParquetSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											},
-											"formatSettings": {
-												"type": "ParquetWriteSettings"
-											}
-										},
-										"enableStaging": false,
-										"translator": {
-											"type": "TabularTranslator",
-											"typeConversion": true,
-											"typeConversionSettings": {
-												"allowDataTruncation": true,
-												"treatBooleanAsNumber": false
-											}
-										}
-									},
-									"inputs": [
-										{
-											"referenceName": "MySql_Magento2",
-											"type": "DatasetReference",
-											"parameters": {
-												"tableName": "@{item()}"
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "ds_parquet",
-											"type": "DatasetReference",
-											"parameters": {
-												"layerName": "menu_raw",
-												"sourceName": "magento"
-											}
-										}
-									]
-								},
-								{
-									"name": "exec_notebook-raw_to_kitchen",
-									"type": "DatabricksNotebook",
-									"dependsOn": [
-										{
-											"activity": "CopyFull",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"notebookPath": "/Users/fabiotuller@outlook.com/prod/raw_to_kitchen/raw_to_kitchen_full",
-										"baseParameters": {
-											"on_id": "vazio",
-											"source": "magento",
-											"table_name": {
-												"value": "@{item()}",
-												"type": "Expression"
-											}
-										}
-									},
-									"linkedServiceName": {
-										"referenceName": "AzureDatabricks",
-										"type": "LinkedServiceReference"
-									}
-								}
-							]
-						}
-					}
-				],
-				"parameters": {
-					"source": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Magento2/raw_kitchen"
-				},
-				"annotations": [],
-				"lastPublishTime": "2021-05-12T15:41:33Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/MySql_Magento2')]",
