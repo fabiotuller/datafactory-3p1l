@@ -302,7 +302,7 @@
 			},
 			{
 				"name": "run_disable_products_without_update_last24h-GIGA",
-				"type": "DatabricksNotebook",
+				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
 						"activity": "run_ingestion_GHub",
@@ -311,20 +311,13 @@
 						]
 					}
 				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/fabiotuller@outlook.com/prod/disable_products_without_update"
-				},
-				"linkedServiceName": {
-					"referenceName": "AzureDatabricks",
-					"type": "LinkedServiceReference"
+					"pipeline": {
+						"referenceName": "disable_products_without_update_last24h-GIGA",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": false
 				}
 			}
 		],
