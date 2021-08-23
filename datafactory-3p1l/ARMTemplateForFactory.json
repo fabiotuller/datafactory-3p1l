@@ -102,13 +102,13 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/disable_products_without_update_last24h-GIGA')]",
+			"name": "[concat(parameters('factoryName'), '/disable_products_without_update_last24h-Carrefour')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "run_disable_products_without_update_last24h-GIGA",
+						"name": "run_disable_products_without_update_last24h-Carrefour",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -120,7 +120,43 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Users/fabiotuller@outlook.com/prod/disable_products_without_update"
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/disable_products_without_update (Carrefour)"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"folder": {
+					"name": "Business Rules"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/disable_products_without_update_last24h-Giga')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "run_disable_products_without_update_last24h-Giga",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/disable_products_without_update (Giga)"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureDatabricks",
@@ -2802,7 +2838,7 @@
 						}
 					},
 					{
-						"name": "run_disable_products_without_update_last24h-GIGA",
+						"name": "run_disable_products_without_update_last24h-Giga",
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
@@ -2815,7 +2851,28 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "disable_products_without_update_last24h-GIGA",
+								"referenceName": "disable_products_without_update_last24h-Giga",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": false,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "run_disable_products_without_update_last24h-Carrefour",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "run_ingestion_GHub",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "disable_products_without_update_last24h-Carrefour",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": false,
@@ -2829,7 +2886,8 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/MySql_Magento2')]",
 				"[concat(variables('factoryId'), '/pipelines/ingestion_GHub')]",
-				"[concat(variables('factoryId'), '/pipelines/disable_products_without_update_last24h-GIGA')]",
+				"[concat(variables('factoryId'), '/pipelines/disable_products_without_update_last24h-Giga')]",
+				"[concat(variables('factoryId'), '/pipelines/disable_products_without_update_last24h-Carrefour')]",
 				"[concat(variables('factoryId'), '/pipelines/ingestionFull')]",
 				"[concat(variables('factoryId'), '/pipelines/serving_customer')]",
 				"[concat(variables('factoryId'), '/pipelines/serving_orders')]",
