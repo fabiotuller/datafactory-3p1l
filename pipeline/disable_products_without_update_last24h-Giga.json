@@ -1,9 +1,9 @@
 {
-	"name": "disable_products_without_update_last24h-GIGA",
+	"name": "disable_products_without_update_last24h-Giga",
 	"properties": {
 		"activities": [
 			{
-				"name": "run_disable_products_without_update_last24h-GIGA",
+				"name": "run_disable_products_without_update_last24h-Giga",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/fabiotuller@outlook.com/prod/disable_products_without_update"
+					"notebookPath": "/Users/fabiotuller@outlook.com/prod/disable_products_without_update (Giga)"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureDatabricks",
