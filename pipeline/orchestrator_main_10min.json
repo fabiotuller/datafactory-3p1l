@@ -301,7 +301,7 @@
 				}
 			},
 			{
-				"name": "run_disable_products_without_update_last24h-GIGA",
+				"name": "run_disable_products_without_update_last24h-Giga",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
@@ -314,7 +314,27 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "disable_products_without_update_last24h-GIGA",
+						"referenceName": "disable_products_without_update_last24h-Giga",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": false
+				}
+			},
+			{
+				"name": "run_disable_products_without_update_last24h-Carrefour",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "run_ingestion_GHub",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "disable_products_without_update_last24h-Carrefour",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": false
