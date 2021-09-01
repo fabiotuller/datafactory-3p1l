@@ -15,6 +15,12 @@
 					"referenceName": "i_orchestrator_main_10min",
 					"type": "PipelineReference"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "ingestion SFTP and API",
+					"type": "PipelineReference"
+				}
 			}
 		],
 		"type": "BlobEventsTrigger",
