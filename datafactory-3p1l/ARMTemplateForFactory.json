@@ -292,6 +292,20 @@
 							"waitOnCompletion": true,
 							"parameters": {}
 						}
+					},
+					{
+						"name": "run ingestion SFTP and API",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "ingestion SFTP and API",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
 					}
 				],
 				"folder": {
@@ -300,7 +314,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/integration_carrefour')]"
+				"[concat(variables('factoryId'), '/pipelines/integration_carrefour')]",
+				"[concat(variables('factoryId'), '/pipelines/ingestion SFTP and API')]"
 			]
 		},
 		{
@@ -3971,13 +3986,6 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "ingestion SFTP and API",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
 					}
 				],
 				"type": "BlobEventsTrigger",
@@ -3993,8 +4001,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/orchestrator_main_10min')]",
-				"[concat(variables('factoryId'), '/pipelines/i_orchestrator_main_10min')]",
-				"[concat(variables('factoryId'), '/pipelines/ingestion SFTP and API')]"
+				"[concat(variables('factoryId'), '/pipelines/i_orchestrator_main_10min')]"
 			]
 		},
 		{
