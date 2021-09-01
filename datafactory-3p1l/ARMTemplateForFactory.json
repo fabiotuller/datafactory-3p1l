@@ -3971,6 +3971,13 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "ingestion SFTP and API",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
 					}
 				],
 				"type": "BlobEventsTrigger",
@@ -3986,7 +3993,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/orchestrator_main_10min')]",
-				"[concat(variables('factoryId'), '/pipelines/i_orchestrator_main_10min')]"
+				"[concat(variables('factoryId'), '/pipelines/i_orchestrator_main_10min')]",
+				"[concat(variables('factoryId'), '/pipelines/ingestion SFTP and API')]"
 			]
 		},
 		{
