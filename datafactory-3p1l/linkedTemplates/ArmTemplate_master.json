@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'accessToken' de 'AzureDatabricks'"
 		},
+		"AzureDatabricks_integration_accessToken": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'accessToken' de 'AzureDatabricks_integration'"
+		},
 		"AzureFileStorage1_connectionString": {
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'AzureFileStorage1'"
@@ -91,6 +95,9 @@
 					},
 					"AzureDatabricks_accessToken": {
 						"value": "[parameters('AzureDatabricks_accessToken')]"
+					},
+					"AzureDatabricks_integration_accessToken": {
+						"value": "[parameters('AzureDatabricks_integration_accessToken')]"
 					},
 					"AzureFileStorage1_connectionString": {
 						"value": "[parameters('AzureFileStorage1_connectionString')]"

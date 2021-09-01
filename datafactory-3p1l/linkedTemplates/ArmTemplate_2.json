@@ -21,6 +21,286 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/i_orchestrator_main_10min')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "carrefour_pipeline",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "integration_carrefour",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"folder": {
+					"name": "Integration_3p1l"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ingestion SFTP and API')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ListSellersAPI",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@split('apoiomineiro001',',')",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "ingestion-API",
+									"type": "DatabricksNotebook",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"notebookPath": "/Users/fabiotuller@outlook.com/prod/integration-3p1l/API/cosmoDB_ingestion_integration",
+										"baseParameters": {
+											"seller": {
+												"value": "@{item()}",
+												"type": "Expression"
+											},
+											"directory": "products,prices,stocks"
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "AzureDatabricks_integration",
+										"type": "LinkedServiceReference"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "ListSellersSFTP",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@split('sampleintegration001',',')",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "ingestion-SFTP",
+									"type": "DatabricksNotebook",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"notebookPath": "/Users/fabiotuller@outlook.com/prod/integration-3p1l/SFTP/ingestion_integration_FTP",
+										"baseParameters": {
+											"seller": {
+												"value": "@{item()}",
+												"type": "Expression"
+											},
+											"directory": "products,prices,stocks"
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "AzureDatabricks_integration",
+										"type": "LinkedServiceReference"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "run CosmosDB Out",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ListSellersAPI",
+								"dependencyConditions": [
+									"Completed"
+								]
+							},
+							{
+								"activity": "ListSellersSFTP",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "CosmosDB Out",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"folder": {
+					"name": "Integration_3p1l"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ingestionFull -MenuPay')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ListTables",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@split('payments,sales,payment_sale,payment_statuses,customers',',')",
+								"type": "Expression"
+							},
+							"batchCount": 50,
+							"activities": [
+								{
+									"name": "CopyFull",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "MySqlSource",
+											"query": {
+												"value": "SELECT * FROM @{item()}",
+												"type": "Expression"
+											}
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "MySql_MenuPay",
+											"type": "DatasetReference",
+											"parameters": {
+												"tableName": "@{item()}"
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "ds_parquet",
+											"type": "DatasetReference",
+											"parameters": {
+												"layerName": "menu_raw",
+												"sourceName": "payments"
+											}
+										}
+									]
+								},
+								{
+									"name": "exec_notebook-raw_to_kitchen",
+									"type": "DatabricksNotebook",
+									"dependsOn": [
+										{
+											"activity": "CopyFull",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 1,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"notebookPath": "/Users/fabiotuller@outlook.com/prod/raw_to_kitchen/raw_to_kitchen_full",
+										"baseParameters": {
+											"on_id": "vazio",
+											"source": "payments",
+											"table_name": {
+												"value": "@{item()}",
+												"type": "Expression"
+											}
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "AzureDatabricks",
+										"type": "LinkedServiceReference"
+									}
+								}
+							]
+						}
+					}
+				],
+				"parameters": {
+					"source": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "MenuPay/raw_kitchen"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-05-12T15:33:32Z"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ingestionFull')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1399,7 +1679,9 @@
 				"annotations": [],
 				"lastPublishTime": "2021-05-13T00:20:17Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/ingestionFull -MenuPay')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/orchestrator_main_24h')]",
@@ -1485,7 +1767,8 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/orchestrator_main_10min')]"
+				"[concat(variables('factoryId'), '/pipelines/orchestrator_main_10min')]",
+				"[concat(variables('factoryId'), '/pipelines/i_orchestrator_main_10min')]"
 			]
 		},
 		{

@@ -11,6 +11,9 @@
 		"AzureDatabricks_accessToken": {
 			"value": ""
 		},
+		"AzureDatabricks_integration_accessToken": {
+			"value": ""
+		},
 		"AzureFileStorage1_connectionString": {
 			"value": ""
 		},

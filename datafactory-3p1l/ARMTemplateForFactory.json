@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'accessToken' de 'AzureDatabricks'"
 		},
+		"AzureDatabricks_integration_accessToken": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'accessToken' de 'AzureDatabricks_integration'"
+		},
 		"AzureFileStorage1_connectionString": {
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'AzureFileStorage1'"
@@ -64,6 +68,82 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/CosmosDB Out')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "products to cosmosDB out",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/integration-3p1l/OUT/post integration_products CosmosDB"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks_integration",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "prices to cosmosDB out",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/integration-3p1l/OUT/post integration_prices CosmosDB"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks_integration",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "stocks to cosmosDB out",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/fabiotuller@outlook.com/prod/integration-3p1l/OUT/post integration_stocks CosmosDB"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks_integration",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"folder": {
+					"name": "Integration_3p1l"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks_integration')]"
+			]
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/LogSystem')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -1329,6 +1409,132 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ingestion SFTP and API')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ListSellersAPI",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@split('apoiomineiro001',',')",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "ingestion-API",
+									"type": "DatabricksNotebook",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"notebookPath": "/Users/fabiotuller@outlook.com/prod/integration-3p1l/API/cosmoDB_ingestion_integration",
+										"baseParameters": {
+											"seller": {
+												"value": "@{item()}",
+												"type": "Expression"
+											},
+											"directory": "products,prices,stocks"
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "AzureDatabricks_integration",
+										"type": "LinkedServiceReference"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "ListSellersSFTP",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@split('sampleintegration001',',')",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "ingestion-SFTP",
+									"type": "DatabricksNotebook",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"notebookPath": "/Users/fabiotuller@outlook.com/prod/integration-3p1l/SFTP/ingestion_integration_FTP",
+										"baseParameters": {
+											"seller": {
+												"value": "@{item()}",
+												"type": "Expression"
+											},
+											"directory": "products,prices,stocks"
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "AzureDatabricks_integration",
+										"type": "LinkedServiceReference"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "run CosmosDB Out",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ListSellersAPI",
+								"dependencyConditions": [
+									"Completed"
+								]
+							},
+							{
+								"activity": "ListSellersSFTP",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "CosmosDB Out",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"folder": {
+					"name": "Integration_3p1l"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/CosmosDB Out')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks_integration')]"
 			]
 		},
 		{
@@ -3565,6 +3771,30 @@
 						"value": "[parameters('AzureDatabricks_accessToken')]"
 					},
 					"existingClusterId": "0505-153325-loath60"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime1",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricks_integration')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-6551219085560032.12.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricks_integration_accessToken')]"
+					},
+					"existingClusterId": "0702-142149-harps149"
 				},
 				"connectVia": {
 					"referenceName": "integrationRuntime1",
