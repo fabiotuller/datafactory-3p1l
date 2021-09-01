@@ -1,0 +1,113 @@
+{
+	"name": "ingestion SFTP and API",
+	"properties": {
+		"activities": [
+			{
+				"name": "ListSellersAPI",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@split('apoiomineiro001',',')",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "ingestion-API",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/fabiotuller@outlook.com/prod/integration-3p1l/API/cosmoDB_ingestion_integration",
+								"baseParameters": {
+									"seller": "@{item()}",
+									"directory": "products,prices,stocks"
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricks_integration",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "ListSellersSFTP",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@split('sampleintegration001',',')",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "ingestion-SFTP",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/fabiotuller@outlook.com/prod/integration-3p1l/SFTP/ingestion_integration_FTP",
+								"baseParameters": {
+									"seller": "@{item()}",
+									"directory": "products,prices,stocks"
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricks_integration",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "run CosmosDB Out",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "ListSellersAPI",
+						"dependencyConditions": [
+							"Completed"
+						]
+					},
+					{
+						"activity": "ListSellersSFTP",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "CosmosDB Out",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "Integration_3p1l"
+		},
+		"annotations": []
+	}
+}
