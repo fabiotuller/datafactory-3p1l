@@ -14,6 +14,19 @@
 					},
 					"waitOnCompletion": true
 				}
+			},
+			{
+				"name": "run ingestion SFTP and API",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "ingestion SFTP and API",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"folder": {
